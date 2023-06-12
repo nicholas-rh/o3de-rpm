@@ -1,5 +1,5 @@
 %global		BUNDLED_PACKAGE_URL https://d3t6xeg4fgfoum.cloudfront.net
-%global		BUNDLED_PACKAGE_DIR %{_sourcedir}
+%global		BUNDLED_PACKAGE_DIR o3de-packages
 
 Name:		o3de
 Version:	2305.0
@@ -54,31 +54,87 @@ Source40:	%{BUNDLED_PACKAGE_URL}/zlib-1.2.11-rev5-linux.tar.xz
 Source41:	%{BUNDLED_PACKAGE_URL}/zstd-1.35-multiplatform.tar.xz
 
 BuildRequires:	cmake
+BuildRequires:	fontconfig-devel
 BuildRequires:	g++
 BuildRequires:	ninja-build
 BuildRequires:	openssl-devel
-BuildRequires:	python
+BuildRequires:	libunwind-devel
+BuildRequires:	libxcb-devel
+BuildRequires:	libxkbcommon-x11-devel
+BuildRequires:	libzstd-devel
+BuildRequires:	mesa-libGLU-devel
+BuildRequires:	qt5-qtbase-devel
+BuildRequires:	zlib
+BuildRequires:	zlib-devel
+
+BuildRequires:	python3-devel
+BuildRequires:	python3
+BuildRequires:	python3-attrs 
+BuildRequires:	python3-boto 
+BuildRequires:	python3-botocore
+BuildRequires:	python3-atomicwrites
+BuildRequires:	python3-certifi
+BuildRequires:	python3-chardet
+BuildRequires:	python3-colorama
+BuildRequires:	python3-docutils
+BuildRequires:	python3-gitdb
+BuildRequires:	python3-GitPython
+BuildRequires:	python3-idna
+BuildRequires:	python3-imageio
+BuildRequires:	python3-jinja2
+BuildRequires:	python3-jmespath
+BuildRequires:	python3-markupsafe
+BuildRequires:	python3-more-itertools
+BuildRequires:	python3-numpy
+BuildRequires:	python3-packaging
+BuildRequires:	python3-pillow
+BuildRequires:	python3-pluggy
+BuildRequires:	python3-progressbar2
+BuildRequires:	python3-psutil
+BuildRequires:	python3-py
+BuildRequires:	python3-pyparsing
+BuildRequires:	python3-pytest-mock
+BuildRequires:	python3-pytest-timeout
+BuildRequires:	python3-pytest
+BuildRequires:	python3-dateutil
+BuildRequires:	python3-utils
+BuildRequires:	python3-requests
+BuildRequires:	python-s3transfer
+BuildRequires:	python3-scipy
+BuildRequires:	python3-six
+BuildRequires:	python3-smmap
+BuildRequires:	python3-urllib3
+BuildRequires:	python3-wcwidth
+BuildRequires:	python3-click
+BuildRequires:	python3-dynaconf
+BuildRequires:	python3-box
+BuildRequires:	python3-unipath
+BuildRequires:	python3-cachetools
 
 %description
 Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
 
 %prep
 %autosetup -c
-python/get_python.sh
+
+mkdir -p python/runtime/python-3.10.5-rev2-linux/python/bin
+pushd python/runtime/python-3.10.5-rev2-linux/python/bin
+popd
 
 %build
-#%cmake -B build/linux -G "Ninja Multi-Config" -DLY_3RDPARTY_PATH=%{_sourcedir}
-#%cmake_build 
+export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{_sourcedir}"
+%cmake -B build/linux -G "Ninja Multi-Config" -DLY_3RDPARTY_PATH=%{_sourcedir}
+%cmake_build 
 
 %install
-#%cmake_install
+%cmake_install
 
 %check
-#%ctest
+%ctest
 
 %files
-%license	LICENSE.txt
-%doc		README.md
+license		LICENSE.txt
+doc		README.md
 
 %changelog
 
