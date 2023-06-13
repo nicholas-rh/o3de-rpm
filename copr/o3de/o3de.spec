@@ -1,6 +1,8 @@
 %global		BUNDLED_PACKAGE_URL https://d3t6xeg4fgfoum.cloudfront.net
 %global		BUNDLED_PACKAGE_DIR o3de-packages
 
+%global		toolchain clang
+
 Name:		o3de
 Version:	2305.0
 Release:	1%{?dist}
@@ -53,15 +55,20 @@ Source39:	%{BUNDLED_PACKAGE_URL}/xxhash-0.7.4-rev1-multiplatform.tar.xz
 Source40:	%{BUNDLED_PACKAGE_URL}/zlib-1.2.11-rev5-linux.tar.xz
 Source41:	%{BUNDLED_PACKAGE_URL}/zstd-1.35-multiplatform.tar.xz
 
+# Remove -Werror to prevent extraneous compile errors
+Patch0:		Configurations_clang.patch 
+Patch1:		RenderPass.patch 
+
+BuildRequires:	clang
 BuildRequires:	cmake
 BuildRequires:	fontconfig-devel
-BuildRequires:	g++
 BuildRequires:	ninja-build
 BuildRequires:	openssl-devel
 BuildRequires:	libunwind-devel
 BuildRequires:	libxcb-devel
 BuildRequires:	libxkbcommon-x11-devel
 BuildRequires:	libzstd-devel
+BuildRequires:	lld
 BuildRequires:	mesa-libGLU-devel
 BuildRequires:	qt5-qtbase-devel
 BuildRequires:	zlib
@@ -71,7 +78,7 @@ BuildRequires:	zlib-devel
 Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
 
 %prep
-%autosetup -c
+%autosetup -c -p1
 python/get_python.sh
 
 %build
@@ -84,8 +91,8 @@ cmake --build build/linux --target Editor --config release
 %check
 
 %files
-license		LICENSE.txt
-doc		README.md
+%license	LICENSE.txt
+%doc		README.md
 
 %changelog
 

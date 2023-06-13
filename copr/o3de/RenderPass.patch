@@ -1,0 +1,11 @@
+--- o3de/Gems/Atom/RHI/Vulkan/Code/Source/RHI/RenderPass2.cpp	2023-06-13 10:48:33.797219114 -0400
++++ o3de/Gems/Atom/RHI/Vulkan/Code/Source/RHI/RenderPass.cpp	2023-06-13 10:48:53.068026356 -0400
+@@ -375,7 +375,7 @@
+                 const RenderPass::Descriptor* m_descriptor = nullptr;
+             };
+ 
+-            template<typename T, VkStructureType type = static_cast<VkStructureType>(-1)>
++            template<typename T, VkStructureType type = AZStd::numeric_limits<VkStructureType>::max()>
+             struct StructureTypeTraits
+             {
+                 static const VkStructureType struct_type = type;
