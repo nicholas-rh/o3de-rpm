@@ -58,6 +58,8 @@ Source41:	%{BUNDLED_PACKAGE_URL}/zstd-1.35-multiplatform.tar.xz
 # Remove -Werror to prevent extraneous compile errors
 Patch0:		Configurations_clang.patch 
 Patch1:		RenderPass.patch 
+Patch2:		RecastNavigationCMakeLists.patch
+Patch3:		Configurations_linux.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -78,21 +80,24 @@ BuildRequires:	zlib-devel
 Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
 
 %prep
-%autosetup -c -p1
+%autosetup -p0 -c
 python/get_python.sh
 
 %build
 export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{_sourcedir}"
-cmake -B build/linux -S . -G "Ninja Multi-Config" -DLY_3RDPARTY_PATH=%{_sourcedir}
-cmake --build build/linux --target Editor --config release
+%cmake	-G "Ninja Multi-Config" \
+	-DLY_3RDPARTY_PATH=%{_sourcedir}
+
+%cmake_build
 
 %install
-
-%check
+mkdir -p %{buildroot}/opt/o3de
+cp -r ./* %{buildroot}/opt/o3de
 
 %files
 %license	LICENSE.txt
 %doc		README.md
+/opt/o3de/
 
 %changelog
-
+%autochangelog
