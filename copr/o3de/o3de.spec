@@ -81,14 +81,62 @@ BuildRequires:	zlib-devel
 Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
 
 %prep
-%autosetup -p0 -c
+%setup -c -n %{name}
+mkdir 3rdParty
+%setup -T -D -n %{name}/3rdParty -a 1
+%setup -T -D -n %{name}/3rdParty -a 2
+%setup -T -D -n %{name}/3rdParty -a 3
+%setup -T -D -n %{name}/3rdParty -a 4
+%setup -T -D -n %{name}/3rdParty -a 5
+%setup -T -D -n %{name}/3rdParty -a 6
+%setup -T -D -n %{name}/3rdParty -a 7
+%setup -T -D -n %{name}/3rdParty -a 8
+%setup -T -D -n %{name}/3rdParty -a 9
+%setup -T -D -n %{name}/3rdParty -a 10
+%setup -T -D -n %{name}/3rdParty -a 11
+%setup -T -D -n %{name}/3rdParty -a 12
+%setup -T -D -n %{name}/3rdParty -a 13
+%setup -T -D -n %{name}/3rdParty -a 14
+%setup -T -D -n %{name}/3rdParty -a 15
+%setup -T -D -n %{name}/3rdParty -a 16
+%setup -T -D -n %{name}/3rdParty -a 17
+%setup -T -D -n %{name}/3rdParty -a 18
+%setup -T -D -n %{name}/3rdParty -a 19
+%setup -T -D -n %{name}/3rdParty -a 20
+%setup -T -D -n %{name}/3rdParty -a 21
+%setup -T -D -n %{name}/3rdParty -a 22
+%setup -T -D -n %{name}/3rdParty -a 23
+%setup -T -D -n %{name}/3rdParty -a 24
+%setup -T -D -n %{name}/3rdParty -a 25
+%setup -T -D -n %{name}/3rdParty -a 26
+%setup -T -D -n %{name}/3rdParty -a 27
+%setup -T -D -n %{name}/3rdParty -a 28
+%setup -T -D -n %{name}/3rdParty -a 29
+%setup -T -D -n %{name}/3rdParty -a 30
+%setup -T -D -n %{name}/3rdParty -a 31
+%setup -T -D -n %{name}/3rdParty -a 32
+%setup -T -D -n %{name}/3rdParty -a 33
+%setup -T -D -n %{name}/3rdParty -a 34
+%setup -T -D -n %{name}/3rdParty -a 35
+%setup -T -D -n %{name}/3rdParty -a 36
+%setup -T -D -n %{name}/3rdParty -a 37
+%setup -T -D -n %{name}/3rdParty -a 38
+%setup -T -D -n %{name}/3rdParty -a 39
+%setup -T -D -n %{name}/3rdParty -a 40
+%setup -T -D -n %{name}/3rdParty -a 41
+
+cd %{_builddir}/%{name}
+%patch 0
+%patch 1
+%patch 2
 python/get_python.sh
 
 %build
-export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{_sourcedir}"
+cd %{_builddir}/o3de
+export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{_builddir}/%{name}/3rdParty"
 %cmake	-G "Ninja Multi-Config" \
 	-DCMAKE_INSTALL_PREFIX=/opt/o3de \
-	-DLY_3RDPARTY_PATH=%{_sourcedir} \
+	-DLY_3RDPARTY_PATH=%{_builddir}/%{name}/3rdParty \
 	-DLY_DISABLE_TEST_MODULES=ON \
 	-DO3DE_INSTALL_ENGINE_NAME=o3de-redist
 
