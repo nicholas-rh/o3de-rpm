@@ -1,5 +1,6 @@
 %global		BUNDLED_PACKAGE_URL https://d3t6xeg4fgfoum.cloudfront.net
 %global		BUNDLED_PACKAGE_DIR o3de-packages
+%global 	__brp_check_rpaths %{nil}
 
 %global		toolchain clang
 
@@ -86,13 +87,15 @@ python/get_python.sh
 %build
 export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{_sourcedir}"
 %cmake	-G "Ninja Multi-Config" \
-	-DLY_3RDPARTY_PATH=%{_sourcedir}
+	-DCMAKE_INSTALL_PREFIX=/opt/o3de \
+	-DLY_3RDPARTY_PATH=%{_sourcedir} \
+	-DLY_DISABLE_TEST_MODULES=ON \
+	-DO3DE_INSTALL_ENGINE_NAME=o3de-redist
 
-%cmake_build
+%cmake_build --config profile
 
 %install
-mkdir -p %{buildroot}/opt/o3de
-cp -r ./* %{buildroot}/opt/o3de
+%cmake_install --config profile
 
 %files
 %license	LICENSE.txt
