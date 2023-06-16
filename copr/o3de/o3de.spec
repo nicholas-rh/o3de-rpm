@@ -1,6 +1,5 @@
 %global		BUNDLED_PACKAGE_URL https://d3t6xeg4fgfoum.cloudfront.net
 %global		BUNDLED_PACKAGE_DIR o3de-packages
-%global 	__brp_check_rpaths %{nil}
 
 %global		toolchain clang
 
@@ -10,6 +9,7 @@ Release:	1%{?dist}
 Summary:	Open 3D Engine
 License:	ASL 2.0 or MIT
 URL:		https://o3de.org
+BuildArch:	x86_64
 
 # The O3DE release URL
 Source0:	https://github.com/o3de/o3de/releases/download/%{version}/%{name}-%{version}-lfs.tar.gz
@@ -73,6 +73,7 @@ BuildRequires:	libxkbcommon-x11-devel
 BuildRequires:	libzstd-devel
 BuildRequires:	lld
 BuildRequires:	mesa-libGLU-devel
+BuildRequires:	patchelf
 BuildRequires:	qt5-qtbase-devel
 BuildRequires:	zlib
 BuildRequires:	zlib-devel
@@ -143,11 +144,17 @@ export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{_builddir}/%{n
 %cmake_build --config profile
 
 %install
-%cmake_install --config profile
+%global debug_package %{nil}
+# Fix rpath for PhysX binaries
+patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/3rdParty/PhysX/shared/bin/*
+patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/redhat-linux-build/bin/profile/libPhysXCooking_64.so
+patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/redhat-linux-build/bin/profile/libPhysXCommon_64.so
+patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/redhat-linux-build/bin/profile/libPhysX_64.so
+mkdir -p %{buildroot}/opt/o3de
+cp -r %{_builddir}/o3de/redhat-linux-build/* %{buildroot}/opt/o3de
+%py3_shebang_fix %{buildroot}/opt/o3de/*
 
 %files
-%license	LICENSE.txt
-%doc		README.md
 /opt/o3de/
 
 %changelog
