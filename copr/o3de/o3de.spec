@@ -66,8 +66,10 @@ BuildRequires:	clang
 BuildRequires:	cmake
 BuildRequires:	fontconfig-devel
 BuildRequires:	ninja-build
+BuildRequires:	openssl
 BuildRequires:	openssl-devel
 BuildRequires:	libatomic
+BuildRequires:	libcurl-devel
 BuildRequires:	libunwind-devel
 BuildRequires:	libxcb-devel
 BuildRequires:	libxkbcommon-x11-devel
