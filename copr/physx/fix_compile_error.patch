@@ -1,7 +1,5 @@
-diff --git a/physx/source/compiler/cmake/linux/CMakeLists.txt b/physx/source/compiler/cmake/linux/CMakeLists.txt
-index b0a509a3..c3d39a7d 100644
---- a/physx/source/compiler/cmake/linux/CMakeLists.txt
-+++ b/physx/source/compiler/cmake/linux/CMakeLists.txt
+--- physx/source/compiler/cmake/linux/CMakeLists.txt	2023-06-22 10:09:34.046099123 -0400
++++ physx/source/compiler/cmake/linux/CMakeLists.txt	2023-06-22 10:09:46.252041513 -0400
 @@ -27,7 +27,7 @@
  STRING(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWERCASE)
  
