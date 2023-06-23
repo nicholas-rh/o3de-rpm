@@ -1,4 +1,4 @@
-%global	commit 	1cb38f46977cf3736a3fb1db8191cf4a18c3577b
+%global	commit	1cb38f46977cf3736a3fb1db8191cf4a18c3577b
 
 Name:		MikkTSpace
 Version:	0
@@ -6,7 +6,6 @@ Release:	%autorelease
 Summary:	A common standard for tangent space used in baking tools to produce normal maps.
 License:	Zlib
 URL:		http://www.mikktspace.com/
-ExclusiveArch:	x86_64
 
 Source:		https://github.com/mmikk/MikkTSpace/archive/%{commit}.tar.gz
 
