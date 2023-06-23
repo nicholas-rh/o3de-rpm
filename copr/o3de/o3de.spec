@@ -1,5 +1,8 @@
-%global		BUNDLED_PACKAGE_URL https://d3t6xeg4fgfoum.cloudfront.net
-%global		BUNDLED_PACKAGE_DIR o3de-packages
+%global		BUNDLED_PACKAGE_URL	https://d3t6xeg4fgfoum.cloudfront.net
+%global		BUNDLED_PACKAGE_DIR	o3de-packages
+%global		THIRD_PARTY_PATH	%{_builddir}/%{name}/3rdParty
+
+%global		_vpath_builddir		%{_builddir}/%{name}/build/linux_ninja
 
 %global		toolchain clang
 
@@ -33,7 +36,8 @@ Source16:	%{BUNDLED_PACKAGE_URL}/Lua-5.4.4-rev1-linux.tar.xz
 Source17:	%{BUNDLED_PACKAGE_URL}/lz4-1.9.4-rev2-linux.tar.xz
 Source18:	%{BUNDLED_PACKAGE_URL}/mcpp-2.7.2_az.2-rev1-linux.tar.xz
 Source19:	%{BUNDLED_PACKAGE_URL}/mikkelsen-1.0.0.4-linux.tar.xz
-Source20:	%{BUNDLED_PACKAGE_URL}/NvCloth-v1.1.6-4-gd243404-pr58-rev1-linux.tar.xz
+# The NvCloth license is not approved by Fedora
+#Source20:	%{BUNDLED_PACKAGE_URL}/NvCloth-v1.1.6-4-gd243404-pr58-rev1-linux.tar.xz
 Source21:	%{BUNDLED_PACKAGE_URL}/OpenEXR-3.1.3-rev4-linux.tar.xz
 Source22:	%{BUNDLED_PACKAGE_URL}/openimageio-opencolorio-2.3.17-rev2-linux.tar.xz
 Source23:	%{BUNDLED_PACKAGE_URL}/OpenMesh-8.1-rev3-linux.tar.xz
@@ -61,6 +65,7 @@ Patch0:		Configurations_clang.patch
 Patch1:		RenderPass.patch 
 Patch2:		RecastNavigationCMakeLists.patch
 Patch3:		Configurations_linux.patch
+Patch4:		enginejson.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -106,7 +111,8 @@ mkdir 3rdParty
 %setup -T -D -n %{name}/3rdParty -a 17
 %setup -T -D -n %{name}/3rdParty -a 18
 %setup -T -D -n %{name}/3rdParty -a 19
-%setup -T -D -n %{name}/3rdParty -a 20
+# The NvCloth license is not approved by Fedora
+#%setup -T -D -n %{name}/3rdParty -a 20
 %setup -T -D -n %{name}/3rdParty -a 21
 %setup -T -D -n %{name}/3rdParty -a 22
 %setup -T -D -n %{name}/3rdParty -a 23
@@ -133,32 +139,37 @@ cd %{_builddir}/%{name}
 %patch 0
 %patch 1
 %patch 2
+%patch 3
+%patch 4
 python/get_python.sh
 
 %build
-cd %{_builddir}/o3de
-export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{_builddir}/%{name}/3rdParty"
-%cmake	-G "Ninja Multi-Config" \
-	-DCMAKE_INSTALL_PREFIX=/opt/o3de \
-	-DLY_3RDPARTY_PATH=%{_builddir}/%{name}/3rdParty \
-	-DLY_DISABLE_TEST_MODULES=ON \
-	-DO3DE_INSTALL_ENGINE_NAME=o3de-redist
+cd %{_builddir}/%{name}
+export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PATH}"
 
-%cmake_build --config profile
+%cmake	-G "Ninja Multi-Config" \
+	-DCMAKE_INSTALL_PREFIX=opt/%{name} \
+	-DLY_DISABLE_TEST_MODULES=ON \
+	-DO3DE_INSTALL_ENGINE_NAME=o3de-sdk \
+	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH} \
+	-DCMAKE_INSTALL_PREFIX=/opt/%{name} \
+	-DENABLE_LINKER_BUILD_ID=ON
+
+%cmake_build --preset linux-install --config profile
 
 %install
-%global debug_package %{nil}
-# Fix rpath for PhysX binaries
-patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/3rdParty/PhysX/shared/bin/*
-patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/redhat-linux-build/bin/profile/libPhysXCooking_64.so
-patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/redhat-linux-build/bin/profile/libPhysXCommon_64.so
-patchelf --set-rpath '$ORIGIN' %{_builddir}/o3de/redhat-linux-build/bin/profile/libPhysX_64.so
-mkdir -p %{buildroot}/opt/o3de
-cp -r %{_builddir}/o3de/redhat-linux-build/* %{buildroot}/opt/o3de
+%__cmake -DCMAKE_INSTALL_PREFIX=opt/%{name} \
+cd %{_builddir}/o3de
+%cmake_install --config profile
+#cp -r %{THIRD_PARTY_PATH} %{buildroot}/opt/o3de
+#patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/3rdParty/PhysX/shared/*
+patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/bin/Linux/profile/Default/libPhysXCooking_64.so
+patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/bin/Linux/profile/Default/libPhysXCommon_64.so
+patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/bin/Linux/profile/Default/libPhysX_64.so
 %py3_shebang_fix %{buildroot}/opt/o3de/*
 
 %files
-/opt/o3de/
+/opt/%{name}
 
 %changelog
 %autochangelog
