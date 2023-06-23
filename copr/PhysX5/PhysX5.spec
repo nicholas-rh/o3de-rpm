@@ -9,7 +9,7 @@ Name:		PhysX5
 Version:	5.1.3
 Release:	%autorelease
 Summary:	NVIDIA PhysX5
-License:	BSD-3-Clause and MIT
+License:	BSD-3-Clause
 URL:		https://github.com/NVIDIA-Omniverse/PhysX
 ExclusiveArch:	x86_64
 
@@ -47,7 +47,7 @@ The samples and snippet binaries from PhysX.
 rm -rf blast
 rm -rf flow
 # Use system glew package
-rm physx/snippets/graphics/include/GL/wglew.h
+rm -rf physx/snippets/graphics/include/GL
 
 %build
 pushd physx
