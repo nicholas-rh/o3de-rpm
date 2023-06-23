@@ -9,6 +9,7 @@ URL:		http://www.mikktspace.com/
 
 Source:		https://github.com/mmikk/MikkTSpace/archive/%{commit}.tar.gz
 
+# https://github.com/mmikk/MikkTSpace/issues/4
 Patch0:		license_text.patch
 
 BuildRequires:	gcc
