@@ -19,6 +19,7 @@ BuildRequires:	clang
 BuildRequires:	cmake
 BuildRequires:	glew-devel
 BuildRequires:	libxcrypt-compat
+BuildRequires:	libXdamage
 BuildRequires:	make
 BuildRequires:	python3
 BuildRequires:	patchelf
