@@ -18,6 +18,7 @@ Source:		https://github.com/NVIDIA-Omniverse/PhysX/archive/%{commit}/PhysX-%{sho
 BuildRequires:	cmake
 BuildRequires:	gcc
 BuildRequires:	glew-devel
+BuildRequires:	libxcrypt-compat
 BuildRequires:	make
 BuildRequires:	python3
 BuildRequires:	patchelf
