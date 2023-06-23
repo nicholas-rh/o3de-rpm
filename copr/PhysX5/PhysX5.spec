@@ -24,6 +24,7 @@ BuildRequires:	make
 BuildRequires:	python3
 BuildRequires:	patchelf
 
+#https://github.com/NVIDIA-Omniverse/PhysX/issues/88
 Patch0:		fix_compile_error.patch
 
 %description
