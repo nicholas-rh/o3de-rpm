@@ -9,6 +9,8 @@ URL:		http://www.mikktspace.com/
 
 Source:		https://github.com/mmikk/MikkTSpace/archive/%{commit}.tar.gz
 
+Patch0:		license_text.patch
+
 BuildRequires:	gcc
 
 %description
@@ -21,20 +23,21 @@ Summary:	Development files for mikktspace
 Development files for mikktspace
 
 %prep
-%autosetup -n %{name}-%{commit}
+%autosetup -n MikkTSpace-%{commit}
 
 %build
-gcc %{optflags} mikktspace.c -shared -o %{name}.so.%{version}
+gcc %{optflags} mikktspace.c -shared -o lib%{name}.so.%{version}
 
 %install
 mkdir -p %{buildroot}%{_libdir}
 mkdir -p %{buildroot}%{_includedir}
 
-install -m0755 %{name}.so.%{version} %{buildroot}%{_libdir}
+install -m0755 lib%{name}.so.%{version} %{buildroot}%{_libdir}
 cp -a mikktspace.h %{buildroot}%{_includedir}/%{name}
 
 %files
 %doc README.md
+%license LICENSE
 %{_libdir}/*.so.%{version}
 
 %files devel
