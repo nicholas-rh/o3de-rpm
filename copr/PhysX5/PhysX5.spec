@@ -15,8 +15,8 @@ ExclusiveArch:	x86_64
 
 Source:		https://github.com/NVIDIA-Omniverse/PhysX/archive/%{commit}/PhysX-%{shortcommit}.tar.gz
 
+BuildRequires:	clang
 BuildRequires:	cmake
-BuildRequires:	gcc
 BuildRequires:	glew-devel
 BuildRequires:	libxcrypt-compat
 BuildRequires:	make
