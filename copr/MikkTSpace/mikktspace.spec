@@ -1,6 +1,6 @@
 %global	commit	1cb38f46977cf3736a3fb1db8191cf4a18c3577b
 
-Name:		MikkTSpace
+Name:		mikktspace
 Version:	0
 Release:	%autorelease
 Summary:	A common standard for tangent space used in baking tools to produce normal maps.
@@ -15,10 +15,10 @@ BuildRequires:	gcc
 A common standard for tangent space used in baking tools to produce normal maps.
 
 %package devel
-Summary:	Development files for PhysX
+Summary:	Development files for mikktspace
 
 %description devel
-Development files for PhysX
+Development files for mikktspace
 
 %prep
 %autosetup -n %{name}-%{commit}
@@ -28,7 +28,7 @@ gcc %{optflags} mikktspace.c -shared -o %{name}.so.%{version}
 
 %install
 mkdir -p %{buildroot}%{_libdir}
-mkdir -p %{buildroot}%{_includedir}/MikkTSpace
+mkdir -p %{buildroot}%{_includedir}
 
 install -m0755 %{name}.so.%{version} %{buildroot}%{_libdir}
 cp -a mikktspace.h %{buildroot}%{_includedir}/%{name}
@@ -38,7 +38,7 @@ cp -a mikktspace.h %{buildroot}%{_includedir}/%{name}
 %{_libdir}/*.so.%{version}
 
 %files devel
-%{_includedir}/MikkTSpace/*
+%{_includedir}/*
 
 %changelog
 %autochangelog
