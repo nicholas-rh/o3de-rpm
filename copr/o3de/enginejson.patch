@@ -1,0 +1,10 @@
+--- engine.json	2023-06-20 09:40:09.971304943 -0400
++++ engine.json	2023-06-20 09:40:22.077202348 -0400
+@@ -62,7 +62,6 @@
+         "Gems/MotionMatching",
+         "Gems/Multiplayer",
+         "Gems/MultiplayerCompression",
+-        "Gems/NvCloth",
+         "Gems/PhysX",
+         "Gems/PhysXDebug",
+         "Gems/Prefab/PrefabBuilder",
