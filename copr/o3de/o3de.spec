@@ -1,8 +1,13 @@
 %global		BUNDLED_PACKAGE_URL	https://d3t6xeg4fgfoum.cloudfront.net
-%global		BUNDLED_PACKAGE_DIR	o3de-packages
-%global		THIRD_PARTY_PATH	%{_builddir}/%{name}/3rdParty
+%global		THIRD_PARTY_PATH	%{_builddir}/3rdParty
+%global		INSTALL_PATH		usr/%{_libdir}/%{name}-%{version}
 
-%global		_vpath_builddir		%{_builddir}/%{name}/build/linux_ninja
+# Have to change this to appease the O3DE build system
+%global		_vpath_builddir		%{_builddir}/%{name}-%{version}/build/linux_ninja
+
+# Have to disable this check, I think this will be fixed when we stop importing prebuilt binaries
+%global		_missing_build_ids_terminate_build 0
+%global 	debug_package %{nil}
 
 %global		toolchain clang
 
@@ -81,6 +86,8 @@ BuildRequires:	libxkbcommon-x11-devel
 BuildRequires:	libzstd-devel
 BuildRequires:	lld
 BuildRequires:	mesa-libGLU-devel
+BuildRequires:	python3
+BuildRequires:	python3-devel
 BuildRequires:	patchelf
 BuildRequires:	qt5-qtbase-devel
 BuildRequires:	zlib
@@ -90,81 +97,85 @@ BuildRequires:	zlib-devel
 Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
 
 %prep
-%setup -c -n %{name}
-mkdir 3rdParty
-%setup -T -D -n %{name}/3rdParty -a 1
-%setup -T -D -n %{name}/3rdParty -a 2
-%setup -T -D -n %{name}/3rdParty -a 3
-%setup -T -D -n %{name}/3rdParty -a 4
-%setup -T -D -n %{name}/3rdParty -a 5
-%setup -T -D -n %{name}/3rdParty -a 6
-%setup -T -D -n %{name}/3rdParty -a 7
-%setup -T -D -n %{name}/3rdParty -a 8
-%setup -T -D -n %{name}/3rdParty -a 9
-%setup -T -D -n %{name}/3rdParty -a 10
-%setup -T -D -n %{name}/3rdParty -a 11
-%setup -T -D -n %{name}/3rdParty -a 12
-%setup -T -D -n %{name}/3rdParty -a 13
-%setup -T -D -n %{name}/3rdParty -a 14
-%setup -T -D -n %{name}/3rdParty -a 15
-%setup -T -D -n %{name}/3rdParty -a 16
-%setup -T -D -n %{name}/3rdParty -a 17
-%setup -T -D -n %{name}/3rdParty -a 18
-%setup -T -D -n %{name}/3rdParty -a 19
-# The NvCloth license is not approved by Fedora
-#%setup -T -D -n %{name}/3rdParty -a 20
-%setup -T -D -n %{name}/3rdParty -a 21
-%setup -T -D -n %{name}/3rdParty -a 22
-%setup -T -D -n %{name}/3rdParty -a 23
-%setup -T -D -n %{name}/3rdParty -a 24
-%setup -T -D -n %{name}/3rdParty -a 25
-%setup -T -D -n %{name}/3rdParty -a 26
-%setup -T -D -n %{name}/3rdParty -a 27
-%setup -T -D -n %{name}/3rdParty -a 28
-%setup -T -D -n %{name}/3rdParty -a 29
-%setup -T -D -n %{name}/3rdParty -a 30
-%setup -T -D -n %{name}/3rdParty -a 31
-%setup -T -D -n %{name}/3rdParty -a 32
-%setup -T -D -n %{name}/3rdParty -a 33
-%setup -T -D -n %{name}/3rdParty -a 34
-%setup -T -D -n %{name}/3rdParty -a 35
-%setup -T -D -n %{name}/3rdParty -a 36
-%setup -T -D -n %{name}/3rdParty -a 37
-%setup -T -D -n %{name}/3rdParty -a 38
-%setup -T -D -n %{name}/3rdParty -a 39
-%setup -T -D -n %{name}/3rdParty -a 40
-%setup -T -D -n %{name}/3rdParty -a 41
+mkdir -p %{THIRD_PARTY_PATH}
 
-cd %{_builddir}/%{name}
+%setup -c -n %{name}-%{version}
+
+pushd %{THIRD_PARTY_PATH}
+%setup -T -D -a 1
+%setup -T -D -a 2
+%setup -T -D -a 3
+%setup -T -D -a 4
+%setup -T -D -a 5
+%setup -T -D -a 6
+%setup -T -D -a 7
+%setup -T -D -a 8
+%setup -T -D -a 9
+%setup -T -D -a 10
+%setup -T -D -a 11
+%setup -T -D -a 12
+%setup -T -D -a 13
+%setup -T -D -a 14
+%setup -T -D -a 15
+%setup -T -D -a 16
+%setup -T -D -a 17
+%setup -T -D -a 18
+%setup -T -D -a 19
+# The NvCloth license is not approved for Fedora
+#%setup -T -D -a 20
+%setup -T -D -a 21
+%setup -T -D -a 22
+%setup -T -D -a 23
+%setup -T -D -a 24
+%setup -T -D -a 25
+%setup -T -D -a 26
+%setup -T -D -a 27
+%setup -T -D -a 28
+%setup -T -D -a 29
+%setup -T -D -a 30
+%setup -T -D -a 31
+%setup -T -D -a 32
+%setup -T -D -a 33
+%setup -T -D -a 34
+%setup -T -D -a 35
+%setup -T -D -a 36
+%setup -T -D -a 37
+%setup -T -D -a 38
+%setup -T -D -a 39
+%setup -T -D -a 40
+%setup -T -D -a 41
+popd
+
+pushd %{_builddir}/%{name}-%{version}
 %patch 0
 %patch 1
 %patch 2
 %patch 3
 %patch 4
 python/get_python.sh
+popd
 
 %build
-cd %{_builddir}/%{name}
+# Tell O3DE where to look for 3rd party packages
 export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PATH}"
 
 %cmake	-G "Ninja Multi-Config" \
 	-DLY_DISABLE_TEST_MODULES=ON \
 	-DO3DE_INSTALL_ENGINE_NAME=o3de-sdk \
-	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH}
+	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH} \
+	-DCMAKE_INSTALL_PREFIX=/%{INSTALL_PATH}
 
 %cmake_build --config profile
 
 %install
-mkdir -p %{buildroot}%{_bindir}/%{name}
-mkdir -p %{buildroot}%{_libdir}/%{name}
-
-pushd %{_builddir}/%{name}/build/linux_ninja/bin/profile
-cp -r * %{buildroot}%{_libdir}/%{name}
+%cmake_install --config profile
+pushd %{buildroot}/%{INSTALL_PATH}/bin/Linux/profile/Default/
+patchelf --set-rpath '$ORIGIN' libPhysX*.so*
+%py3_shebang_fix pyside_tool.py shiboken_tool.py
 popd
 
 %files
-%{buildroot}%{_bindir}/%{name}
-%{buildroot}%{_libdir}/%{name}
+/%{INSTALL_PATH}
 
 %changelog
 %autochangelog
