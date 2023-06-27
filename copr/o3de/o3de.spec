@@ -148,28 +148,23 @@ cd %{_builddir}/%{name}
 export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PATH}"
 
 %cmake	-G "Ninja Multi-Config" \
-	-DCMAKE_INSTALL_PREFIX=opt/%{name} \
 	-DLY_DISABLE_TEST_MODULES=ON \
 	-DO3DE_INSTALL_ENGINE_NAME=o3de-sdk \
-	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH} \
-	-DCMAKE_INSTALL_PREFIX=/opt/%{name} \
-	-DENABLE_LINKER_BUILD_ID=ON
+	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH}
 
-%cmake_build --preset linux-install --config profile
+%cmake_build --config profile
 
 %install
-%__cmake -DCMAKE_INSTALL_PREFIX=opt/%{name} \
-cd %{_builddir}/o3de
-%cmake_install --config profile
-#cp -r %{THIRD_PARTY_PATH} %{buildroot}/opt/o3de
-#patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/3rdParty/PhysX/shared/*
-patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/bin/Linux/profile/Default/libPhysXCooking_64.so
-patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/bin/Linux/profile/Default/libPhysXCommon_64.so
-patchelf --set-rpath '$ORIGIN' %{buildroot}/opt/o3de/bin/Linux/profile/Default/libPhysX_64.so
-%py3_shebang_fix %{buildroot}/opt/o3de/*
+mkdir -p %{buildroot}%{_bindir}/%{name}
+mkdir -p %{buildroot}%{_libdir}/%{name}
+
+pushd %{_builddir}/%{name}/build/linux_ninja/bin/profile
+cp -r * %{buildroot}%{_libdir}/%{name}
+popd
 
 %files
-/opt/%{name}
+%{buildroot}%{_bindir}/%{name}
+%{buildroot}%{_libdir}/%{name}
 
 %changelog
 %autochangelog
