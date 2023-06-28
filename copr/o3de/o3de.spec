@@ -1,6 +1,6 @@
 %global		BUNDLED_PACKAGE_URL	https://d3t6xeg4fgfoum.cloudfront.net
 %global		THIRD_PARTY_PATH	%{_builddir}/3rdParty
-%global		INSTALL_PATH		usr/%{_libdir}/%{name}-%{version}
+%global		INSTALL_PATH		%{_libdir}/%{name}-%{version}
 
 # Have to change this to appease the O3DE build system
 %global		_vpath_builddir		%{_builddir}/%{name}-%{version}/build/linux_ninja
@@ -71,6 +71,7 @@ Patch1:		RenderPass.patch
 Patch2:		RecastNavigationCMakeLists.patch
 Patch3:		Configurations_linux.patch
 Patch4:		enginejson.patch
+# # Patch5:		systemlibraries.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -152,6 +153,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 2
 %patch 3
 %patch 4
+# %patch 5
 python/get_python.sh
 popd
 
@@ -166,6 +168,7 @@ export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PA
 	-DCMAKE_INSTALL_PREFIX=/%{INSTALL_PATH}
 
 %cmake_build --config profile
+rm -rf ${THIRD_PARTY_PATH}
 
 %install
 %cmake_install --config profile
