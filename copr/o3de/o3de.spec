@@ -165,20 +165,21 @@ export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PA
 	-DLY_DISABLE_TEST_MODULES=ON \
 	-DO3DE_INSTALL_ENGINE_NAME=o3de-sdk \
 	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH} \
-	-DCMAKE_INSTALL_PREFIX=/%{INSTALL_PATH}
+	-DCMAKE_INSTALL_PREFIX=%{INSTALL_PATH}
 
-%cmake_build --config profile
-rm -rf ${THIRD_PARTY_PATH}
+%cmake_build --config release
 
 %install
-%cmake_install --config profile
-pushd %{buildroot}/%{INSTALL_PATH}/bin/Linux/profile/Default/
+%cmake_install --config release
+pushd %{buildroot}%{INSTALL_PATH}/bin/Linux/release/Default/
 patchelf --set-rpath '$ORIGIN' libPhysX*.so*
 %py3_shebang_fix pyside_tool.py shiboken_tool.py
+# Fix file permissions
+chmod -R u+rw,go+r .
 popd
 
 %files
-/%{INSTALL_PATH}
+%{INSTALL_PATH}
 
 %changelog
 %autochangelog
