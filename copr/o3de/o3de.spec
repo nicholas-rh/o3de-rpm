@@ -1,6 +1,8 @@
 %global		BUNDLED_PACKAGE_URL	https://d3t6xeg4fgfoum.cloudfront.net
 %global		THIRD_PARTY_PATH	%{_builddir}/3rdParty
-%global		INSTALL_PATH		%{_libdir}/%{name}-%{version}
+%global		INSTALL_PATH		/opt/o3de
+# Longer compilation times but smaller storage footprint
+%global 	SAVE_DISK_SPACE		1
 
 # Have to change this to appease the O3DE build system
 %global		_vpath_builddir		%{_builddir}/%{name}-%{version}/build/linux_ninja
@@ -71,7 +73,7 @@ Patch1:		RenderPass.patch
 Patch2:		RecastNavigationCMakeLists.patch
 Patch3:		Configurations_linux.patch
 Patch4:		enginejson.patch
-# # Patch5:		systemlibraries.patch
+# Patch5:		systemlibraries.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -154,7 +156,6 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 3
 %patch 4
 # %patch 5
-python/get_python.sh
 popd
 
 %build
@@ -162,12 +163,14 @@ popd
 export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PATH}"
 
 %cmake	-G "Ninja Multi-Config" \
-	-DLY_DISABLE_TEST_MODULES=ON \
-	-DLY_STRIP_DEBUG_SYMBOLS=ON \
 	-DO3DE_INSTALL_ENGINE_NAME=o3de-sdk \
 	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH} \
 	-DCMAKE_INSTALL_PREFIX=%{INSTALL_PATH} \
+%if %{SAVE_DISK_SPACE}
+	-DLY_DISABLE_TEST_MODULES=ON \
+	-DLY_STRIP_DEBUG_SYMBOLS=ON \
 	-DLY_UNITY_BUILD=OFF
+%endif
 
 %cmake_build --config profile
 
@@ -182,6 +185,13 @@ popd
 
 %files
 %{INSTALL_PATH}
+
+%post
+pushd %{INSTALL_PATH}
+python/get_python.sh
+FILE_OWNER=$(logname)
+chown -R $FILE_OWNER:$FILE_OWNER .
+popd
 
 %changelog
 %autochangelog
