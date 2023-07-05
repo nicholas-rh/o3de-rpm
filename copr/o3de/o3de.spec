@@ -32,7 +32,7 @@ Source5:	%{BUNDLED_PACKAGE_URL}/AWSNativeSDK-1.9.50-rev2-linux-openssl-3.tar.xz
 Source6:	%{BUNDLED_PACKAGE_URL}/AWSNativeSDK-1.9.50-rev3-linux.tar.xz
 Source7:	%{BUNDLED_PACKAGE_URL}/azslc-1.8.15-rev2-linux.tar.xz
 Source8:	%{BUNDLED_PACKAGE_URL}/cityhash-1.1-multiplatform.tar.xz
-Source9:	%{BUNDLED_PACKAGE_URL}/DirectXShaderCompilerDxc-1.6.2112-o3de-rev1-linux.tar.xz
+Source9:	https://github.com/nicholas-rh/o3de-rpm/raw/master/copr/o3de/DirectXShaderCompilerDxc-1.6.2112-o3de-rev1-linux.tar.xz
 Source10:	%{BUNDLED_PACKAGE_URL}/expat-2.4.2-rev2-linux.tar.xz
 Source11:	%{BUNDLED_PACKAGE_URL}/freetype-2.11.1-rev1-linux.tar.xz
 Source12:	%{BUNDLED_PACKAGE_URL}/googlebenchmark-1.7.0-rev1-linux.tar.xz
@@ -74,6 +74,7 @@ Patch2:		RecastNavigationCMakeLists.patch
 Patch3:		Configurations_linux.patch
 Patch4:		enginejson.patch
 # Patch5:		systemlibraries.patch
+Patch6:		dxc_checksum.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -156,6 +157,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 3
 %patch 4
 # %patch 5
+%patch 6
 popd
 
 %build
