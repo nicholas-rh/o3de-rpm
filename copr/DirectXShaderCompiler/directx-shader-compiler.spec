@@ -69,16 +69,31 @@ Development libraries and files for DirectXShaderCompiler
 
 %install
 %cmake_install
-# Delete the things that are the same as clang
-rm -rfv ~("dxc*|libdxcompiler.so)
+
 # Wrong lib dir
 mv %{buildroot}/usr/lib %{buildroot}%{_libdir}
+
+rm -rf %{buildroot}%{_bindir}/llvm*
+rm -rf %{buildroot}%{_bindir}/opt
+rm -rf %{buildroot}%{_bindir}/verify-uselistorder
+
+rm -rf %{buildroot}%{_includedir}/clang
+rm -rf %{buildroot}%{_includedir}/clang-c
+rm -rf %{buildroot}%{_includedir}/llvm
+rm -rf %{buildroot}%{_includedir}/llvm-c
+
+rm -rf %{buildroot}%{_libdir}/*.a
+
+rm -rf %{buildroot}%{_datadir}/llvm
 
 %files
 %license LICENSE.TXT
 %doc README.md
-%{_bindir}/dxc*
+%{_bindir}/dx*
 %{_libdir}/libdxcompiler.so
+
+%files devel
+%{_includedir}/dxc
 
 %changelog
 * Fri Jun 30 2023 Nicholas Frizzell <nfrizzel@redhat.com> 1.6.2112-0
