@@ -1,6 +1,6 @@
 %global		toolchain clang
 
-Name:		DirectXShaderCompiler
+Name:		directx-shader-compiler
 Version:	1.6.2112
 Release:	1%{?dist}
 Summary:	Compiler and tools to compile High-Level Shader Language (HLSL)
@@ -8,7 +8,7 @@ URL:		https://github.com/microsoft/DirectXShaderCompiler
 License:	Apache-2.0 and MIT and NCSA
 
 # generated using generate_tarball.sh
-Source0:	DirectXShaderCompiler.tar.gz
+Source0:	directx-shader-compiler.tar.gz
 
 BuildRequires:	g++
 BuildRequires:	gcc
@@ -36,7 +36,7 @@ Summary:	Development libraries and files for DirectXShaderCompiler
 Development libraries and files for DirectXShaderCompiler
 
 %prep
-%autosetup -n DirectXShaderCompiler
+%autosetup -n directx-shader-compiler
 
 %build
 # Pulled from the o3de package build config
