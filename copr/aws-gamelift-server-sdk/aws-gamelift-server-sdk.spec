@@ -1,6 +1,6 @@
 %global		toolchain clang
 
-Name:		amazon-gamelift-server-sdk
+Name:		aws-gamelift-server-sdk
 Version:	5.0.0
 Release:	1%{?dist}
 Summary:	Server SDK for Amazon GameLift
@@ -34,7 +34,7 @@ GameLift Server SDK, Amazon GameLift Local, and an Unreal Engine plugin.
 %autosetup -c
 
 %build
-pushd %{_builddir}/amazon-gamelift-server-sdk-5.0.0/GameLift-SDK-Release-5.0.0/GameLift-Cpp-ServerSDK-5.0.0/
+pushd %{_builddir}/aws-gamelift-server-sdk-5.0.0/GameLift-SDK-Release-5.0.0/GameLift-Cpp-ServerSDK-5.0.0/
 %cmake .
 %cmake_build
 popd
@@ -42,13 +42,13 @@ popd
 %install
 mkdir -p %{buildroot}%{_includedir}
 mkdir -p %{buildroot}%{_libdir}
-mkdir -p %{buildroot}%{_datadir}/licenses/amazon-gamelift-server-sdk
-mkdir -p %{buildroot}%{_datadir}/doc/amazon-gamelift-server-sdk
+mkdir -p %{buildroot}%{_datadir}/licenses/aws-gamelift-server-sdk
+mkdir -p %{buildroot}%{_datadir}/doc/aws-gamelift-server-sdk
 
-pushd %{_builddir}/amazon-gamelift-server-sdk-5.0.0/GameLift-SDK-Release-5.0.0/GameLift-Cpp-ServerSDK-5.0.0/
-cp -a NOTICE_C++_AMAZON_GAMELIFT_SDK.TXT %{buildroot}%{_datadir}/licenses/amazon-gamelift-server-sdk/
-cp -a LICENSE_AMAZON_GAMELIFT_SDK.TXT %{buildroot}%{_datadir}/licenses/amazon-gamelift-server-sdk/
-cp -a README.md %{buildroot}%{_datadir}/doc/amazon-gamelift-server-sdk/
+pushd %{_builddir}/aws-gamelift-server-sdk-5.0.0/GameLift-SDK-Release-5.0.0/GameLift-Cpp-ServerSDK-5.0.0/
+cp -a NOTICE_C++_AMAZON_GAMELIFT_SDK.TXT %{buildroot}%{_datadir}/licenses/aws-gamelift-server-sdk/
+cp -a LICENSE_AMAZON_GAMELIFT_SDK.TXT %{buildroot}%{_datadir}/licenses/aws-gamelift-server-sdk/
+cp -a README.md %{buildroot}%{_datadir}/doc/aws-gamelift-server-sdk/
 pushd %{_vpath_builddir}/prefix
 cp -ra include/aws %{buildroot}%{_includedir}/
 cp -ra lib/libaws-cpp-sdk-gamelift-server.so %{buildroot}%{_libdir}/
@@ -56,8 +56,8 @@ popd
 popd
 
 %files
-%{_includedir}
-%{_libdir}
+%{_includedir}/aws
+%{_libdir}/libaws-cpp-sdk-gamelift-server.so
 %license NOTICE_C++_AMAZON_GAMELIFT_SDK.TXT LICENSE_AMAZON_GAMELIFT_SDK.TXT
 %doc README.md
 
