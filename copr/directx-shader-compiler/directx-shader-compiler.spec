@@ -14,6 +14,7 @@ Patch0:         clang_uint32_t.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
+BuildRequires:	git
 BuildRequires:	ninja-build
 BuildRequires:	python3-devel
 
