@@ -1,0 +1,12 @@
+index d3a3b4f40..a7bb9eca6 100644
+--- tools/clang/include/clang/Basic/Version.h
++++ tools/clang/include/clang/Basic/Version.h
+@@ -16,6 +16,8 @@
+ #ifndef LLVM_CLANG_BASIC_VERSION_H
+ #define LLVM_CLANG_BASIC_VERSION_H
+ 
++#include <stdint.h>
++
+ #include "clang/Basic/Version.inc"
+ #include "llvm/ADT/StringRef.h"
+ 
