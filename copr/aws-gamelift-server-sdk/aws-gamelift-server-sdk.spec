@@ -11,6 +11,7 @@ Source0: 	https://gamelift-release.s3-us-west-2.amazonaws.com/GameLift-SDK-Relea
 
 BuildRequires:	clang
 BuildRequires:	cmake
+BuildRequires:	git
 BuildRequires:	protobuf-devel 
 BuildRequires:	protobuf-lite-devel
 
