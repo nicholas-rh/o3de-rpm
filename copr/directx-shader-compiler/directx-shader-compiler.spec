@@ -8,7 +8,7 @@ URL:		https://github.com/microsoft/DirectXShaderCompiler
 License:	Apache-2.0 and MIT and NCSA
 
 # generated using generate_tarball.sh
-Source0:	directx-shader-compiler.tar.gz
+Source0:	https://github.com/nicholas-rh/o3de-rpm/releases/download/large_files/directx-shader-compiler.tar.gz
 
 Patch0:         clang_uint32_t.patch
 
