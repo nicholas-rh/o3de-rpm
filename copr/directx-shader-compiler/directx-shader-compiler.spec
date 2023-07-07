@@ -12,8 +12,7 @@ Source0:	https://github.com/nicholas-rh/o3de-rpm/releases/download/large_files/d
 
 Patch0:         clang_uint32_t.patch
 
-BuildRequires:	g++
-BuildRequires:	gcc
+BuildRequires:	clang
 BuildRequires:	cmake
 BuildRequires:	ninja-build
 BuildRequires:	python3-devel
