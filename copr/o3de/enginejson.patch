@@ -1,6 +1,25 @@
---- engine.json	2023-06-20 09:40:09.971304943 -0400
-+++ engine.json	2023-06-20 09:40:22.077202348 -0400
-@@ -62,7 +62,6 @@
+--- engine.json
++++ engine.json
+@@ -23,10 +23,6 @@
+         "Gems/AtomTressFX",
+         "Gems/AudioEngineWwise",
+         "Gems/AudioSystem",
+-        "Gems/AWSClientAuth",
+-        "Gems/AWSCore",
+-        "Gems/AWSGameLift",
+-        "Gems/AWSMetrics",
+         "Gems/BarrierInput",
+         "Gems/Camera",
+         "Gems/CameraFramework",
+@@ -47,7 +43,6 @@
+         "Gems/GradientSignal",
+         "Gems/GraphCanvas",
+         "Gems/GraphModel",
+-        "Gems/HttpRequestor",
+         "Gems/ImGui",
+         "Gems/InAppPurchases",
+         "Gems/LandscapeCanvas",
+@@ -62,7 +57,6 @@
          "Gems/MotionMatching",
          "Gems/Multiplayer",
          "Gems/MultiplayerCompression",
@@ -8,3 +27,11 @@
          "Gems/PhysX",
          "Gems/PhysXDebug",
          "Gems/Prefab/PrefabBuilder",
+@@ -94,7 +88,6 @@
+         "Gems/TestAssetBuilder",
+         "Gems/TextureAtlas",
+         "Gems/TickBusOrderViewer",
+-        "Gems/Twitch",
+         "Gems/UiBasics",
+         "Gems/Vegetation",
+         "Gems/VideoPlaybackFramework",

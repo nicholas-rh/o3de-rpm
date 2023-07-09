@@ -32,7 +32,7 @@ Source5:	%{BUNDLED_PACKAGE_URL}/AWSNativeSDK-1.9.50-rev2-linux-openssl-3.tar.xz
 Source6:	%{BUNDLED_PACKAGE_URL}/AWSNativeSDK-1.9.50-rev3-linux.tar.xz
 Source7:	%{BUNDLED_PACKAGE_URL}/azslc-1.8.15-rev2-linux.tar.xz
 Source8:	%{BUNDLED_PACKAGE_URL}/cityhash-1.1-multiplatform.tar.xz
-Source9:	https://github.com/nicholas-rh/o3de-rpm/raw/master/copr/o3de/DirectXShaderCompilerDxc-1.6.2112-o3de-rev1-linux.tar.xz
+#Source9:	https://github.com/nicholas-rh/o3de-rpm/raw/master/copr/o3de/DirectXShaderCompilerDxc-1.6.2112-o3de-rev1-linux.tar.xz
 Source10:	%{BUNDLED_PACKAGE_URL}/expat-2.4.2-rev2-linux.tar.xz
 Source11:	%{BUNDLED_PACKAGE_URL}/freetype-2.11.1-rev1-linux.tar.xz
 Source12:	%{BUNDLED_PACKAGE_URL}/googlebenchmark-1.7.0-rev1-linux.tar.xz
@@ -83,9 +83,14 @@ Patch5: PAL_linux.patch
 Patch6: RecastNavigationCMakeLists.patch
 # Fix clang-specific compile error
 Patch7: RenderPass.patch
+# Disable AWSCore gem in default template for now
+Patch8: DefaultProjectproject.patch
+# Disable AWS tool for now
+Patch9: ToolsCMakeLists.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
+BuildRequires:	directx-shader-compiler
 BuildRequires:	fontconfig-devel
 BuildRequires:	ninja-build
 BuildRequires:	openssl
@@ -122,7 +127,7 @@ pushd %{THIRD_PARTY_PATH}
 %setup -T -D -a 6
 %setup -T -D -a 7
 %setup -T -D -a 8
-%setup -T -D -a 9
+#%setup -T -D -a 9
 %setup -T -D -a 10
 %setup -T -D -a 11
 %setup -T -D -a 12
@@ -167,6 +172,8 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 5
 %patch 6
 %patch 7
+%patch 8
+%patch 9
 popd
 
 %build
