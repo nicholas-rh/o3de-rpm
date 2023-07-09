@@ -1,0 +1,12 @@
+--- cmake/compiler_settings.cmake	2023-07-08 20:53:22.564908107 -0400
++++ cmake/compiler_settings.cmake	2023-07-08 20:52:01.931393441 -0400
+@@ -53,7 +53,7 @@
+ endmacro()
+ 
+ macro(set_gcc_warnings)
+-    list(APPEND AWS_COMPILER_WARNINGS "-Wall" "-Werror" "-pedantic" "-Wextra")
++    list(APPEND AWS_COMPILER_WARNINGS "-Wall" "-pedantic" "-Wextra")
+     if(COMPILER_CLANG)
+         if(PLATFORM_ANDROID)
+             # when using clang with libc and API lower than 21 we need to include Android support headers and ignore the gnu-include-next warning.
+
