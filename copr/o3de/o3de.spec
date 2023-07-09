@@ -67,14 +67,22 @@ Source39:	%{BUNDLED_PACKAGE_URL}/xxhash-0.7.4-rev1-multiplatform.tar.xz
 Source40:	%{BUNDLED_PACKAGE_URL}/zlib-1.2.11-rev5-linux.tar.xz
 Source41:	%{BUNDLED_PACKAGE_URL}/zstd-1.35-multiplatform.tar.xz
 
+# Use custom dxc 
+Patch0: BuiltInPackages_linux.patch
 # Remove -Werror to prevent extraneous compile errors
-Patch0:		Configurations_clang.patch 
-Patch1:		RenderPass.patch 
-Patch2:		RecastNavigationCMakeLists.patch
-Patch3:		Configurations_linux.patch
-Patch4:		enginejson.patch
-# Patch5:		systemlibraries.patch
-Patch6:		dxc_checksum.patch
+Patch1: Configurations_clang.patch
+# Use lld
+Patch2: Configurations_linux.patch
+# Use custom dxc 
+Patch3: DirectXShaderCompiler_linux.patch
+# Disable non-free gems/modules
+Patch4: enginejson.patch
+# Use custom dxc
+Patch5: PAL_linux.patch
+# This gem gives a compile error, need to fix eventually but disabling for now
+Patch6: RecastNavigationCMakeLists.patch
+# Fix clang-specific compile error
+Patch7: RenderPass.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -156,8 +164,9 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 2
 %patch 3
 %patch 4
-# %patch 5
+%patch 5
 %patch 6
+%patch 7
 popd
 
 %build
