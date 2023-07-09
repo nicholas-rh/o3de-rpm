@@ -8,7 +8,7 @@ License:	Apache-2.0
 URL:		https://github.com/aws/aws-sdk-cpp
 
 # Generated using generate_tarball.sh
-Source0:	aws-sdk-cpp.tar.gz
+Source0:	https://github.com/nicholas-rh/o3de-rpm/releases/download/large_files/aws-sdk-cpp.tar.gz
 
 # Remove -Werror
 Patch0: compiler_settings.patch
