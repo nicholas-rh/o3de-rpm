@@ -58,10 +58,10 @@ popd
 %{_bindir}/sha256_profile
 # There are some random cmake files in here, I'm not sure what their purpose is
 # Also "libtesting-resources.so"
-%{_libdir}/
+%{_libdir}/*
 
 %files devel
-%{_includedir}/
+%{_includedir}/*
 
 %changelog
 %autochangelog
