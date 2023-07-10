@@ -193,6 +193,8 @@ export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PA
 %cmake_build --config profile
 
 %install
+mkdir -p %{buildroot}%{_bindir}/
+
 %cmake_install --config profile
 pushd %{buildroot}%{INSTALL_PATH}/bin/Linux/profile/Default/
 patchelf --set-rpath '$ORIGIN' libPhysX*.so*
@@ -201,8 +203,14 @@ patchelf --set-rpath '$ORIGIN' libPhysX*.so*
 chmod -R u+rw,go+r .
 popd
 
+pushd %{buildroot}%{bindir}
+# Add o3de launcher to the path
+echo 'pushd %{INSTALL_PATH}; bin/Linux/profile/Default/o3de; popd' > o3de
+popd
+
 %files
 %{INSTALL_PATH}
+%{_bindir}/o3de
 
 %post
 pushd %{INSTALL_PATH}
