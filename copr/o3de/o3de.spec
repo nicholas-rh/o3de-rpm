@@ -2,7 +2,7 @@
 %global		THIRD_PARTY_PATH	%{_builddir}/3rdParty
 %global		INSTALL_PATH		/opt/o3de
 # Longer compilation times but smaller storage footprint
-%global 	SAVE_DISK_SPACE		1
+%global 	SAVE_DISK_SPACE		0
 
 # Have to change this to appease the O3DE build system
 %global		_vpath_builddir		%{_builddir}/%{name}-%{version}/build/linux_ninja
@@ -74,7 +74,7 @@ Patch1: Configurations_clang.patch
 # Use lld
 Patch2: Configurations_linux.patch
 # Use custom dxc 
-Patch3: DirectXShaderCompiler_linux.patch
+Patch3: SystemPackages_linux.patch
 # Disable non-free gems/modules
 Patch4: enginejson.patch
 # Use custom dxc
@@ -89,6 +89,8 @@ Patch8: DefaultProjectproject.patch
 Patch9: ToolsCMakeLists.patch
 # Add bundled licenses
 Patch10: NOTICES.patch
+# Move zlib fix
+Patch11: BuiltInPackages.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -177,6 +179,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 8
 %patch 9
 %patch 10
+%patch 11
 popd
 
 %build
@@ -199,6 +202,7 @@ export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PA
 mkdir -p %{buildroot}%{_bindir}/
 
 %cmake_install --config profile
+
 pushd %{buildroot}%{INSTALL_PATH}/bin/Linux/profile/Default/
 patchelf --set-rpath '$ORIGIN' libPhysX*.so*
 %py3_shebang_fix pyside_tool.py shiboken_tool.py
@@ -206,7 +210,15 @@ patchelf --set-rpath '$ORIGIN' libPhysX*.so*
 chmod -R u+rw,go+r .
 popd
 
-pushd %{buildroot}%{bindir}
+#Fix build-id conflicts
+pushd %{buildroot}%{INSTALL_PATH}/bin/Linux/profile/Default/Builders/DirectXShaderCompiler
+rm bin/dxc-3.7
+rm lib/libdxcompiler.so.3.7
+ln -s %{_bindir}/dxc-3.7 bin/dxc-3.7
+ln -s %{_bindir}/libdxcompiler.so.3.7 lib/libdxcompiler.so.3.7
+popd
+
+pushd %{buildroot}%{_bindir}
 # Add o3de launcher to the path
 echo 'pushd %{INSTALL_PATH}; bin/Linux/profile/Default/o3de; popd' > o3de
 popd
