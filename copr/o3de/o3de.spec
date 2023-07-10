@@ -19,7 +19,7 @@ Release:	1%{?dist}
 Summary:	Open 3D Engine
 License:	ASL 2.0 or MIT
 URL:		https://o3de.org
-BuildArch:	x86_64
+ExclusiveArch:	x86_64
 
 # The O3DE release URL
 Source0:	https://github.com/o3de/o3de/releases/download/%{version}/%{name}-%{version}-lfs.tar.gz
@@ -87,6 +87,8 @@ Patch7: RenderPass.patch
 Patch8: DefaultProjectproject.patch
 # Disable AWS tool for now
 Patch9: ToolsCMakeLists.patch
+# Add bundled licenses
+Patch10: NOTICES.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -174,6 +176,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 7
 %patch 8
 %patch 9
+%patch 10
 popd
 
 %build
@@ -209,6 +212,8 @@ echo 'pushd %{INSTALL_PATH}; bin/Linux/profile/Default/o3de; popd' > o3de
 popd
 
 %files
+%license NOTICES.txt LICENSE.txt
+%doc README.md
 %{INSTALL_PATH}
 %{_bindir}/o3de
 
