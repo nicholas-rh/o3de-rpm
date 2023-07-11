@@ -2,7 +2,7 @@
 %global		THIRD_PARTY_PATH	%{_builddir}/3rdParty
 %global		INSTALL_PATH		/opt/o3de
 # Longer compilation times but smaller storage footprint
-%global 	SAVE_DISK_SPACE		0
+%global 	SAVE_DISK_SPACE		1
 
 # Have to change this to appease the O3DE build system
 %global		_vpath_builddir		%{_builddir}/%{name}-%{version}/build/linux_ninja
