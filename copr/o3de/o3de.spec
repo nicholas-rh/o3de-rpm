@@ -221,6 +221,7 @@ popd
 pushd %{buildroot}%{_bindir}
 # Add o3de launcher to the path
 echo 'pushd %{INSTALL_PATH}; bin/Linux/profile/Default/o3de; popd' > o3de
+chmod +x o3de
 popd
 
 %files
