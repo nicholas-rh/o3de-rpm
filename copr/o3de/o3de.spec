@@ -114,6 +114,22 @@ BuildRequires:	qt5-qtbase-devel
 BuildRequires:	zlib
 BuildRequires:	zlib-devel
 
+Requires:	Requires: cmake%{?_isa}
+Requires:	Requires: clang%{?_isa}
+Requires:	Requires: fontconfig-devel%{?_isa}
+Requires:	Requires: libcurl-devel%{?_isa}
+Requires:	Requires: libunwind-devel%{?_isa}
+Requires:	Requires: libxkbcommon-x11-devel%{?_isa}
+Requires:	Requires: libxkb-devel%{?_isa}
+Requires:	Requires: libzstd-devel%{?_isa}
+Requires:	Requires: mesa-libGLU-devel%{?_isa}
+Requires:	Requires: ninja-build%{?_isa}
+Requires:	Requires: ninja-build%{?_isa}
+Requires:	Requires: openssl%{?_isa}
+Requires:	Requires: openssl-devel%{?_isa}
+Requires:	Requires: qt5-qtbase-devel%{?_isa}
+Requires:	Requires: zlib-devel%{?_isa}
+
 %description
 Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
 
