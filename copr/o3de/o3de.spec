@@ -116,21 +116,21 @@ BuildRequires:	qt5-qtbase-devel
 BuildRequires:	zlib
 BuildRequires:	zlib-devel
 
-Requires:	Requires: cmake%{?_isa}
-Requires:	Requires: clang%{?_isa}
-Requires:	Requires: directx-shader-compiler%{?_isa}
-Requires:	Requires: fontconfig-devel%{?_isa}
-Requires:	Requires: libcurl-devel%{?_isa}
-Requires:	Requires: libunwind-devel%{?_isa}
-Requires:	Requires: libxkbcommon-x11-devel%{?_isa}
-Requires:	Requires: libxcb-devel%{?_isa}
-Requires:	Requires: libzstd-devel%{?_isa}
-Requires:	Requires: mesa-libGLU-devel%{?_isa}
-Requires:	Requires: ninja-build%{?_isa}
-Requires:	Requires: openssl%{?_isa}
-Requires:	Requires: openssl-devel%{?_isa}
-Requires:	Requires: qt5-qtbase-devel%{?_isa}
-Requires:	Requires: zlib-devel%{?_isa}
+Requires: cmake%{?_isa}
+Requires: clang%{?_isa}
+Requires: directx-shader-compiler%{?_isa}
+Requires: fontconfig-devel%{?_isa}
+Requires: libcurl-devel%{?_isa}
+Requires: libunwind-devel%{?_isa}
+Requires: libxkbcommon-x11-devel%{?_isa}
+Requires: libxcb-devel%{?_isa}
+Requires: libzstd-devel%{?_isa}
+Requires: mesa-libGLU-devel%{?_isa}
+Requires: ninja-build%{?_isa}
+Requires: openssl%{?_isa}
+Requires: openssl-devel%{?_isa}
+Requires: qt5-qtbase-devel%{?_isa}
+Requires: zlib-devel%{?_isa}
 
 Provides:	bundled(assimp) = 5.2.5
 Provides:	bundled(astc-encoder) = 3.2
@@ -281,6 +281,7 @@ popd
 pushd %{buildroot}%{_bindir}
 # Add o3de launcher to the path
 echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/o3de; popd' > o3de
+chmod +x o3de
 popd
 
 %files
