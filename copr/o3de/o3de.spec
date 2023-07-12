@@ -266,6 +266,8 @@ patchelf --set-rpath '$ORIGIN' libPhysX*.so*
 %py3_shebang_fix pyside_tool.py shiboken_tool.py
 # Fix file permissions
 chmod -R u+rw,go+r .
+chmod +x AssetBuilder AssetBundler AssetProcessor Builders/AZSLc/azslc Builders/DirectXShaderCompiler/bin/* \
+	Builders/SPIRVCross/spirv-cross o3de 
 popd
 
 #Fix build-id conflicts
@@ -279,8 +281,6 @@ popd
 pushd %{buildroot}%{_bindir}
 # Add o3de launcher to the path
 echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/o3de; popd' > o3de
-chmod +x AssetBuilder AssetBundler AssetProcessor Builders/AZSLc/azslc Builders/DirectXShaderCompiler/bin/* \
-	Builders/SPIRVCross/spirv-cross o3de 
 popd
 
 %files

@@ -9,15 +9,13 @@ URL:		http://www.mikktspace.com/
 
 Source:		https://github.com/mmikk/MikkTSpace/archive/%{commit}.tar.gz
 
-# https://github.com/mmikk/MikkTSpace/issues/4
-Patch0:		license_text.patch
-
 BuildRequires:	gcc
 
 %description
 A common standard for tangent space used in baking tools to produce normal maps.
 
 %package devel
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Summary:	Development files for mikktspace
 
 %description devel
@@ -27,22 +25,23 @@ Development files for mikktspace
 %autosetup -n MikkTSpace-%{commit}
 
 %build
-gcc %{optflags} mikktspace.c -shared -o lib%{name}.so
+gcc %{optflags} mikktspace.c -shared -o lib%{name}.so.%{version}
 
 %install
 mkdir -p %{buildroot}%{_libdir}
 mkdir -p %{buildroot}%{_includedir}/%{name}/
 
-install -m0755 lib%{name}.so %{buildroot}%{_libdir}
 install -m0755 mikktspace.h %{buildroot}%{_includedir}/%{name}/
+install -m0755 lib%{name}.so.%{version} %{buildroot}%{_libdir}
+ln -s lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so
 
 %files
 %doc README.md
-%license LICENSE
-%{_libdir}/*.so
+%{_libdir}/libmikktspace.so.*
 
 %files devel
-%{_includedir}/*
+%{_includedir}/mikktspace
+%{_libdir}/libmikktspace.so
 
 %changelog
 %autochangelog
