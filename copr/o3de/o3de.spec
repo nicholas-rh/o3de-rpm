@@ -130,46 +130,45 @@ Requires:	Requires: openssl-devel%{?_isa}
 Requires:	Requires: qt5-qtbase-devel%{?_isa}
 Requires:	Requires: zlib-devel%{?_isa}
 
-%description
-Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
+Provides:	bundled(assimp) = 5.2.5
+Provides:	bundled(astc-encoder) = 3.2
+Provides:	bundled(AWSGameLiftServer) = 3.4.2
+Provides:	bundled(AWSGameLiftServer) = 5.0.0
+Provides:	bundled(AWSNativeSDK) = 1.9.50
+Provides:	bundled(azslc) = 1.8.15
+Provides:	bundled(cityhash) = 1.1
+Provides:	bundled(expat) = 2.4.2
+Provides:	bundled(freetype) = 2.11.1
+Provides:	bundled(googlebenchmark) = 1.7.0
+Provides:	bundled(googletest) = 1.8.1
+Provides:	bundled(ISPCTexComp) = 36b80aa
+Provides:	bundled(libsamplerate) = 0.2.1
+Provides:	bundled(lua) = 5.4.4
+Provides:	bundled(lz4) = 1.9.4
+Provides:	bundled(mcpp) = 2.7.2
+Provides:	bundled(mikktspace) = 1.0.0
+Provides:	bundled(OpenEXR) = 3.1.3
+Provides:	bundled(openimageio) = 2.3.17
+Provides:	bundled(opencolorio) = 2.3.17
+Provides:	bundled(OpenMesg) = 8.1
+Provides:	bundled(PhysX) = 4.1.2
+Provides:	bundled(libpng) = 1.6.37
+Provides:	bundled(poly2tri) = 7f0487a
+Provides:	bundled(python3) = 3.10.5
+Provides:	bundled(python3-pybind11) = 2.10.0
+Provides:	bundled(python3-pyside2) = 2.10.0
+Provides:	bundled(qt5-qtbase) = 5.15.2
+Provides:	bundled(RapidJSON) = 1.1.0
+Provides:	bundled(RapidXML) = 1.13
+Provides:	bundled(SPIRVCross) = 2021.04.29
+Provides:	bundled(sqlite) = 3.37.2
+Provides:	bundled(squish-ccr) = deb557d
+Provides:	bundled(libtiff) = 4.2.0
+Provides:	bundled(v-hacd) = 2.3.1
+Provides:	bundled(vulkan-validation-layers) = 1.2.198
+Provides:	bundled(xxhash) = 0.7.4
+Provides:	bundled(zstd) = 1.35
 
-%prep
-mkdir -p %{THIRD_PARTY_PATH}
-
-%setup -c -n %{name}-%{version}
-
-pushd %{THIRD_PARTY_PATH}
-%setup -T -D -a 1
-%setup -T -D -a 2
-%setup -T -D -a 3
-%setup -T -D -a 4
-%setup -T -D -a 5
-%setup -T -D -a 6
-%setup -T -D -a 7
-%setup -T -D -a 8
-#%setup -T -D -a 9
-%setup -T -D -a 10
-%setup -T -D -a 11
-%setup -T -D -a 12
-%setup -T -D -a 13
-%setup -T -D -a 14
-%setup -T -D -a 15
-%setup -T -D -a 16
-%setup -T -D -a 17
-%setup -T -D -a 18
-%setup -T -D -a 19
-# The NvCloth license is not approved for Fedora
-#%setup -T -D -a 20
-%setup -T -D -a 21
-%setup -T -D -a 22
-%setup -T -D -a 23
-%setup -T -D -a 24
-%setup -T -D -a 25
-%setup -T -D -a 26
-%setup -T -D -a 27
-%setup -T -D -a 28
-%setup -T -D -a 29
-%setup -T -D -a 30
 %setup -T -D -a 31
 %setup -T -D -a 32
 %setup -T -D -a 33
