@@ -116,14 +116,14 @@ BuildRequires:	zlib-devel
 
 Requires:	Requires: cmake%{?_isa}
 Requires:	Requires: clang%{?_isa}
+Requires:	Requires: directx-shader-compiler%{?_isa}
 Requires:	Requires: fontconfig-devel%{?_isa}
 Requires:	Requires: libcurl-devel%{?_isa}
 Requires:	Requires: libunwind-devel%{?_isa}
 Requires:	Requires: libxkbcommon-x11-devel%{?_isa}
-Requires:	Requires: libxkb-devel%{?_isa}
+Requires:	Requires: libxcb-devel%{?_isa}
 Requires:	Requires: libzstd-devel%{?_isa}
 Requires:	Requires: mesa-libGLU-devel%{?_isa}
-Requires:	Requires: ninja-build%{?_isa}
 Requires:	Requires: ninja-build%{?_isa}
 Requires:	Requires: openssl%{?_isa}
 Requires:	Requires: openssl-devel%{?_isa}
