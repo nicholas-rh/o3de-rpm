@@ -295,5 +295,9 @@ pushd %{INSTALL_PATH}
 python/get_python.sh
 popd
 
+%postun
+# Extra cleanup since the python files aren't recognized after being modified in the post install
+rm -rf %{INSTALL_PATH}
+
 %changelog
 %autochangelog
