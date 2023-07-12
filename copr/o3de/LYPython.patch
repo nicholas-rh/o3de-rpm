@@ -1,0 +1,11 @@
+--- cmake/LYPython.cmake	2023-07-12 11:50:43.289102068 -0400
++++ cmake/LYPython.cmake	2023-07-12 11:50:34.866096835 -0400
+@@ -145,7 +145,7 @@
+     file(MAKE_DIRECTORY ${stamp_file_directory})
+     
+     # for the first release of the o3de snap we will only use packages shipped with o3de
+-    if ($ENV{O3DE_SNAP})
++    if ($ENV{O3DE_SNAP} OR $ENV{O3DE_ROOT_INSTALL})
+         file(TOUCH ${stamp_file})
+     endif()
+    

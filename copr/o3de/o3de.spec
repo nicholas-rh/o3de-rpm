@@ -1,6 +1,6 @@
 %global		BUNDLED_PACKAGE_URL	https://d3t6xeg4fgfoum.cloudfront.net
 %global		THIRD_PARTY_PATH	%{_builddir}/3rdParty
-%global		INSTALL_PATH		/opt/o3de
+%global		INSTALL_PATH		%{_libdir}/o3de
 # Longer compilation times but smaller storage footprint
 %global 	SAVE_DISK_SPACE		1
 
@@ -91,6 +91,8 @@ Patch9: ToolsCMakeLists.patch
 Patch10: NOTICES.patch
 # Move zlib fix
 Patch11: BuiltInPackages.patch
+# Add envvar to allow for running as root user without issue
+Patch12: LYPython.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -169,6 +171,46 @@ Provides:	bundled(vulkan-validation-layers) = 1.2.198
 Provides:	bundled(xxhash) = 0.7.4
 Provides:	bundled(zstd) = 1.35
 
+%description
+Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that enables developers and content creators to build AAA games, cinema-quality 3D worlds, and high-fidelity simulations without any fees or commercial obligations. 
+
+%prep
+mkdir -p %{THIRD_PARTY_PATH}
+
+%setup -c -n %{name}-%{version}
+
+pushd %{THIRD_PARTY_PATH}
+%setup -T -D -a 1
+%setup -T -D -a 2
+%setup -T -D -a 3
+%setup -T -D -a 4
+%setup -T -D -a 5
+%setup -T -D -a 6
+%setup -T -D -a 7
+%setup -T -D -a 8
+#%setup -T -D -a 9
+%setup -T -D -a 10
+%setup -T -D -a 11
+%setup -T -D -a 12
+%setup -T -D -a 13
+%setup -T -D -a 14
+%setup -T -D -a 15
+%setup -T -D -a 16
+%setup -T -D -a 17
+%setup -T -D -a 18
+%setup -T -D -a 19
+# The NvCloth license is not approved for Fedora
+#%setup -T -D -a 20
+%setup -T -D -a 21
+%setup -T -D -a 22
+%setup -T -D -a 23
+%setup -T -D -a 24
+%setup -T -D -a 25
+%setup -T -D -a 26
+%setup -T -D -a 27
+%setup -T -D -a 28
+%setup -T -D -a 29
+%setup -T -D -a 30
 %setup -T -D -a 31
 %setup -T -D -a 32
 %setup -T -D -a 33
@@ -195,6 +237,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 9
 %patch 10
 %patch 11
+%patch 12
 popd
 
 %build
@@ -235,8 +278,9 @@ popd
 
 pushd %{buildroot}%{_bindir}
 # Add o3de launcher to the path
-echo 'pushd %{INSTALL_PATH}; bin/Linux/profile/Default/o3de; popd' > o3de
-chmod +x o3de
+echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/o3de; popd' > o3de
+chmod +x AssetBuilder AssetBundler AssetProcessor Builders/AZSLc/azslc Builders/DirectXShaderCompiler/bin/* \
+	Builders/SPIRVCross/spirv-cross o3de 
 popd
 
 %files
@@ -248,8 +292,6 @@ popd
 %post
 pushd %{INSTALL_PATH}
 python/get_python.sh
-FILE_OWNER=$(logname)
-chown -R $FILE_OWNER:$FILE_OWNER .
 popd
 
 %changelog
