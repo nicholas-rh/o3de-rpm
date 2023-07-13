@@ -125,6 +125,7 @@ Requires: libunwind-devel%{?_isa}
 Requires: libxkbcommon-x11-devel%{?_isa}
 Requires: libxcb-devel%{?_isa}
 Requires: libzstd-devel%{?_isa}
+Requires: lld%{?_isa}
 Requires: mesa-libGLU-devel%{?_isa}
 Requires: ninja-build%{?_isa}
 Requires: openssl%{?_isa}
