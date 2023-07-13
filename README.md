@@ -53,3 +53,19 @@ At least one of these licenses is not approved for Fedora (NvCloth with the Nvid
 A.) Snap and Flatpak are good candidates for formats to distribute O3DE builds, and this is an opinion shared by the upstream developers. 
 
 There is a snap package produced by the upstream O3DE build system using CPack, which is a tool that generates installation packages from CMake files: https://docs.o3de.org/docs/welcome-guide/setup/installing-linux/. Currently this is considered "experimental". There is no equivalent support for Flatpak using CPack. I've considered manually putting together one as a test, but haven't yet due to time constraints.
+
+**Q.) How does the O3DE build system function?**
+
+A.) O3DE is a primarily-C++ project with build scripts written in CMake. It is composed of "Gems" which are modules that include code, assets, etc. There are a number of core gems (required for the engine to function) as well as many optional gems. Users can also specify their own gems, and there are a set of official, extra gems in the o3de-extra repository which can be included https://github.com/o3de/o3de-extras/tree/development
+
+The core engine code as well as each gem has certain dependencies which are satisfied either by bundling & building the source code into the engine/gem itself (e.g. ImGui), pulling the source code using CMake plumbing (RecastNavigation), using system libraries (libunwind, openssl, etc.) or finally by using the O3DE-specific package manager, which pulls prebuilt binaries or other dependencies from an O3DE-hosted server.
+
+CMake targets are speified which correspond to each third-party dependency. These dependencies are resolved differently depending on the type. The first three categories of dependencies mentioned are included through the usual CMake means. O3DE package manager packages, however, are associated with a certain package name and version which the O3DE build system will use to download them at build time as needed (they are cached afterwards).
+
+**Q.) How does the O3DE package manager function?**
+
+A.) Packages are built separately, typically on a build server, and then uploaded to the hardcoded package distribution server. The O3DE package generation scripts are located at https://github.com/o3de/3p-package-source and https://github.com/o3de/3p-package-scripts. The documentation for these tools is fairly good, but as a quick summary each package has its own custom build script that is run which generates a distributable package in the format O3DE expects. These scripts are different for each platform, and some are more complex than others, for example some require a Docker image to be built while others are simple shell scripts.
+
+**Q.) Why can't we just rebuild the O3DE dependencies using their tooling for Fedora?**
+
+A.) I investigated doing this but I don't think it is the right way forward unless the upstream developers are also interested in getting involved. The reason why is because certain packages which use Docker build setups use an Ubuntu-based Docker image which doesn't get us anywhere, and those that don't still use Ubuntu tools like the apt package manager. It would probably be more effort to rewrite these than to just properly package the dependencies, and when packaging them properly others can make use of them for non-O3DE software as well.
