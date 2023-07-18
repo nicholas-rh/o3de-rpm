@@ -71,30 +71,28 @@ Source41:	%{BUNDLED_PACKAGE_URL}/zstd-1.35-multiplatform.tar.xz
 Patch0: BuiltInPackages_linux.patch
 # Remove -Werror to prevent extraneous compile errors
 Patch1: Configurations_clang.patch
-# Use lld
-#Patch2: Configurations_linux.patch
 # Use custom dxc 
-Patch3: SystemPackages_linux.patch
+Patch2: SystemPackages_linux.patch
 # Disable non-free gems/modules
-Patch4: enginejson.patch
+Patch3: enginejson.patch
 # Use custom dxc
-Patch5: PAL_linux.patch
+Patch4: PAL_linux.patch
 # This gem gives a compile error, need to fix eventually but disabling for now
-Patch6: RecastNavigationCMakeLists.patch
+#Patch5: RecastNavigationCMakeLists.patch
 # Fix clang-specific compile error
-Patch7: RenderPass.patch
+Patch6: RenderPass.patch
 # Disable AWSCore gem in default template for now
-Patch8: DefaultProjectproject.patch
+Patch7: DefaultProjectproject.patch
 # Disable AWS tool for now
-Patch9: ToolsCMakeLists.patch
+Patch8: ToolsCMakeLists.patch
 # Add bundled licenses
-Patch10: NOTICES.patch
+Patch9: NOTICES.patch
 # Move zlib fix
-Patch11: BuiltInPackages.patch
+Patch10: BuiltInPackages.patch
 # Add envvar to allow for running as root user without issue
-Patch12: LYPython.patch
+Patch11: LYPython.patch
 # Remove PyYaml
-Patch13: requirements.patch
+Patch12: requirements.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -109,7 +107,6 @@ BuildRequires:	libunwind-devel
 BuildRequires:	libxcb-devel
 BuildRequires:	libxkbcommon-x11-devel
 BuildRequires:	libzstd-devel
-BuildRequires:	lld
 BuildRequires:	mesa-libGLU-devel
 BuildRequires:	python3
 BuildRequires:	python3-devel
@@ -127,7 +124,6 @@ Requires: libunwind-devel%{?_isa}
 Requires: libxkbcommon-x11-devel%{?_isa}
 Requires: libxcb-devel%{?_isa}
 Requires: libzstd-devel%{?_isa}
-Requires: lld%{?_isa}
 Requires: mesa-libGLU-devel%{?_isa}
 Requires: ninja-build%{?_isa}
 Requires: openssl%{?_isa}
@@ -230,10 +226,10 @@ popd
 pushd %{_builddir}/%{name}-%{version}
 %patch 0
 %patch 1
-#%patch 2
+%patch 2
 %patch 3
 %patch 4
-%patch 5
+#%patch 5
 %patch 6
 %patch 7
 %patch 8
@@ -241,7 +237,6 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 10
 %patch 11
 %patch 12
-%patch 13
 popd
 
 %build
@@ -278,6 +273,7 @@ ln -s %{_bindir}/dxc-3.7 bin/dxc-3.7
 ln -s %{_bindir}/libdxcompiler.so.3.7 lib/libdxcompiler.so.3.7
 popd
 
+# Add o3de launcher to the PATH
 pushd %{buildroot}%{_bindir}
 echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/o3de; popd' > o3de
 popd
@@ -295,7 +291,6 @@ popd
 
 #TODO: move this where it needs to go
 pushd %{_bindir}
-# Add o3de launcher to the PATH
 chmod +x o3de
 popd
 
