@@ -72,7 +72,7 @@ Patch0: BuiltInPackages_linux.patch
 # Remove -Werror to prevent extraneous compile errors
 Patch1: Configurations_clang.patch
 # Use lld
-Patch2: Configurations_linux.patch
+#Patch2: Configurations_linux.patch
 # Use custom dxc 
 Patch3: SystemPackages_linux.patch
 # Disable non-free gems/modules
@@ -93,6 +93,8 @@ Patch10: NOTICES.patch
 Patch11: BuiltInPackages.patch
 # Add envvar to allow for running as root user without issue
 Patch12: LYPython.patch
+# Remove PyYaml
+Patch13: requirements.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -228,7 +230,7 @@ popd
 pushd %{_builddir}/%{name}-%{version}
 %patch 0
 %patch 1
-%patch 2
+#%patch 2
 %patch 3
 %patch 4
 %patch 5
@@ -239,6 +241,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 10
 %patch 11
 %patch 12
+%patch 13
 popd
 
 %build
