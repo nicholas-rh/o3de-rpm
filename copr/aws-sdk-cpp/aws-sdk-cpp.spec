@@ -40,7 +40,7 @@ popd
 
 %build
 # Change this when more components are needed
-%cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_ONLY=core
+%cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_ONLY="access-management;cognito-identity;cognito-idp;core;devicefarm;dynamodb;gamelift;identity-management;kinesis;lambda;mobileanalytics;queues;s3;sns;sqs;sts;transfer" -DBUILD_SHARED_LIBS=ON -DENABLE_TESTING=OFF
 %cmake_build
 
 %install
