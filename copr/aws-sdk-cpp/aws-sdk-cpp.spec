@@ -15,6 +15,10 @@ Patch0: compiler_settings.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
+BuildRequires:	libcurl-devel
+BuildRequires:	libssh-devel
+BuildRequires:	openssl-devel
+BuildRequires:	zlib-devel
 
 %description
 The AWS SDK for C++ provides a modern C++ (version C++ 11 or later) interface for Amazon Web Services (AWS). It is meant to be performant and fully functioning with low- and high-level SDKs, while minimizing dependencies and providing platform portability (Windows, OSX, Linux, and mobile).
