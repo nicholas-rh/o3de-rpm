@@ -15,7 +15,7 @@
 
 Name:		o3de
 Version:	2305.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Open 3D Engine
 License:	ASL 2.0 or MIT
 URL:		https://o3de.org
