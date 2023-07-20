@@ -81,23 +81,20 @@ Patch4: PAL_linux.patch
 Patch5: RecastNavigationCMakeLists.patch
 # Fix clang-specific compile error
 Patch6: RenderPass.patch
-# Disable AWSCore gem in default template for now
-Patch7: DefaultProjectproject.patch
-# Disable AWS tool for now
-Patch8: ToolsCMakeLists.patch
 # Add bundled licenses
-Patch9: NOTICES.patch
+Patch7: NOTICES.patch
 # Move zlib fix
-Patch10: BuiltInPackages.patch
+Patch8: BuiltInPackages.patch
 # Add envvar to allow for running as root user without issue
-Patch11: LYPython.patch
+Patch9: LYPython.patch
 # Remove PyYaml
-Patch12: requirements.patch
+Patch10: requirements.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
 BuildRequires:	directx-shader-compiler
 BuildRequires:	fontconfig-devel
+BuildRequires:	git
 BuildRequires:	ninja-build
 BuildRequires:	openssl
 BuildRequires:	openssl-devel
@@ -115,21 +112,21 @@ BuildRequires:	qt5-qtbase-devel
 BuildRequires:	zlib
 BuildRequires:	zlib-devel
 
-Requires: cmake%{?_isa}
-Requires: clang%{?_isa}
-Requires: directx-shader-compiler%{?_isa}
-Requires: fontconfig-devel%{?_isa}
-Requires: libcurl-devel%{?_isa}
-Requires: libunwind-devel%{?_isa}
-Requires: libxkbcommon-x11-devel%{?_isa}
-Requires: libxcb-devel%{?_isa}
-Requires: libzstd-devel%{?_isa}
-Requires: mesa-libGLU-devel%{?_isa}
-Requires: ninja-build%{?_isa}
-Requires: openssl%{?_isa}
-Requires: openssl-devel%{?_isa}
-Requires: qt5-qtbase-devel%{?_isa}
-Requires: zlib-devel%{?_isa}
+Requires:	cmake%{?_isa}
+Requires:	clang%{?_isa}
+Requires:	directx-shader-compiler%{?_isa}
+Requires:	fontconfig-devel%{?_isa}
+Requires:	libcurl-devel%{?_isa}
+Requires:	libunwind-devel%{?_isa}
+Requires:	libxkbcommon-x11-devel%{?_isa}
+Requires:	libxcb-devel%{?_isa}
+Requires:	libzstd-devel%{?_isa}
+Requires:	mesa-libGLU-devel%{?_isa}
+Requires:	ninja-build%{?_isa}
+Requires:	openssl%{?_isa}
+Requires:	openssl-devel%{?_isa}
+Requires:	qt5-qtbase-devel%{?_isa}
+Requires:	zlib-devel%{?_isa}
 
 Provides:	bundled(assimp) = 5.2.5
 Provides:	bundled(astc-encoder) = 3.2
@@ -235,8 +232,6 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 8
 %patch 9
 %patch 10
-%patch 11
-%patch 12
 popd
 
 %build
