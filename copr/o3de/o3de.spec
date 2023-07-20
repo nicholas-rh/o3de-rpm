@@ -237,7 +237,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 8
 %patch 9
 %patch 10
-#%patch 11
+%patch 11
 popd
 
 %build
