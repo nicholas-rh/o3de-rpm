@@ -15,7 +15,7 @@
 
 Name:		o3de
 Version:	2305.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Open 3D Engine
 License:	ASL 2.0 or MIT
 URL:		https://o3de.org
@@ -91,6 +91,8 @@ Patch9: LYPython.patch
 Patch10: requirements.patch
 Patch11: FindAWSNativeSDK.patch
 
+BuildRequires:	aws-sdk-cpp
+BuildRequires:	aws-sdk-cpp-devel
 BuildRequires:	clang
 BuildRequires:	cmake
 BuildRequires:	directx-shader-compiler
@@ -113,6 +115,8 @@ BuildRequires:	qt5-qtbase-devel
 BuildRequires:	zlib
 BuildRequires:	zlib-devel
 
+Requires:	aws-sdk-cpp%{?_isa}
+Requires:	aws-sdk-cpp-devel%{?_isa}
 Requires:	cmake%{?_isa}
 Requires:	clang%{?_isa}
 Requires:	directx-shader-compiler%{?_isa}
@@ -233,7 +237,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 8
 %patch 9
 %patch 10
-%patch 11
+#%patch 11
 popd
 
 %build
@@ -244,6 +248,8 @@ export LY_PACKAGE_SERVER_URLS="${LY_PACKAGE_SERVER_URLS};file://%{THIRD_PARTY_PA
 	-DO3DE_INSTALL_ENGINE_NAME=o3de-sdk \
 	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH} \
 	-DCMAKE_INSTALL_PREFIX=%{INSTALL_PATH} \
+	-DLY_SYSTEM_PACKAGE_AWSNativeSDK=ON \
+	-DLY_SYSTEM_PACKAGE_AWSGameLiftServerSDK=ON \
 %if %{SAVE_DISK_SPACE}
 	-DLY_DISABLE_TEST_MODULES=ON \
 	-DLY_STRIP_DEBUG_SYMBOLS=ON \
