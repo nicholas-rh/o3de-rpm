@@ -288,6 +288,8 @@ popd
 %doc README.md
 %{INSTALL_PATH}
 %{_bindir}/o3de
+%{_bindir}/o3de.assetprocessor
+%{_bindir}/o3de.editor
 
 %post
 pushd %{INSTALL_PATH}
