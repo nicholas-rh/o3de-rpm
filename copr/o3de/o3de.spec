@@ -89,6 +89,7 @@ Patch8: BuiltInPackages.patch
 Patch9: LYPython.patch
 # Remove PyYaml
 Patch10: requirements.patch
+Patch11: FindAWSNativeSDK.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
@@ -232,6 +233,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 8
 %patch 9
 %patch 10
+%patch 11
 popd
 
 %build
