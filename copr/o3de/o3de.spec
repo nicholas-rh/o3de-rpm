@@ -78,7 +78,7 @@ Patch3: enginejson.patch
 # Use custom dxc
 Patch4: PAL_linux.patch
 # This gem gives a compile error, need to fix eventually but disabling for now
-#Patch5: RecastNavigationCMakeLists.patch
+Patch5: RecastNavigationCMakeLists.patch
 # Fix clang-specific compile error
 Patch6: RenderPass.patch
 # Disable AWSCore gem in default template for now
@@ -229,7 +229,7 @@ pushd %{_builddir}/%{name}-%{version}
 %patch 2
 %patch 3
 %patch 4
-#%patch 5
+%patch 5
 %patch 6
 %patch 7
 %patch 8
