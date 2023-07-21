@@ -26,10 +26,10 @@ Source0:	https://github.com/o3de/o3de/releases/download/%{version}/%{name}-%{ver
 # Vendored/bundled dependencies
 Source1:       %{BUNDLED_PACKAGE_URL}/assimp-5.2.5-rev1-linux.tar.xz
 Source2:       %{BUNDLED_PACKAGE_URL}/astc-encoder-3.2-rev2-linux.tar.xz
-#Source3:      %{BUNDLED_PACKAGE_URL}/AWSGameLiftServerSDK-3.4.2-rev1-linux.tar.xz
-Source4:       https://github.com/nicholas-rh/o3de-rpm/releases/download/large_files/AWSGameLiftServerSDK-3.4.2-rev1-linux.tar.xz
-Source5:       https://github.com/nicholas-rh/o3de-rpm/releases/download/large_files/AWSNativeSDK-1.9.50-rev2-linux-openssl-3.tar.xz
-#Source6:      %{BUNDLED_PACKAGE_URL}/AWSNativeSDK-1.9.50-rev3-linux.tar.xz
+Source3:       %{BUNDLED_PACKAGE_URL}/AWSGameLiftServerSDK-3.4.2-rev1-linux.tar.xz
+#Source4:      https://github.com/nicholas-rh/o3de-rpm/releases/download/large_files/AWSGameLiftServerSDK-3.4.2-rev1-linux.tar.xz
+#Source5:      https://github.com/nicholas-rh/o3de-rpm/releases/download/large_files/AWSNativeSDK-1.9.50-rev2-linux-openssl-3.tar.xz
+Source6:       %{BUNDLED_PACKAGE_URL}/AWSNativeSDK-1.9.50-rev3-linux.tar.xz
 Source7:       %{BUNDLED_PACKAGE_URL}/azslc-1.8.15-rev2-linux.tar.xz
 Source8:       %{BUNDLED_PACKAGE_URL}/cityhash-1.1-multiplatform.tar.xz
 #Source9:      https://github.com/nicholas-rh/o3de-rpm/raw/master/copr/o3de/DirectXShaderCompilerDxc-1.6.2112-o3de-re1-linux.tar.xz
@@ -193,10 +193,10 @@ mkdir -p %{THIRD_PARTY_PATH}/downloaded_packages
 
 cp %{SOURCE1} %{THIRD_PARTY_PATH}/downloaded_packages
 cp %{SOURCE2} %{THIRD_PARTY_PATH}/downloaded_packages
-#cp %{SOURCE3} %{THIRD_PARTY_PATH}/downloaded_packages
-cp %{SOURCE4} %{THIRD_PARTY_PATH}/downloaded_packages
-cp %{SOURCE5} %{THIRD_PARTY_PATH}/downloaded_packages
-#cp %{SOURCE6} %{THIRD_PARTY_PATH}/downloaded_packages
+cp %{SOURCE3} %{THIRD_PARTY_PATH}/downloaded_packages
+#cp %{SOURCE4} %{THIRD_PARTY_PATH}/downloaded_packages
+#cp %{SOURCE5} %{THIRD_PARTY_PATH}/downloaded_packages
+cp %{SOURCE6} %{THIRD_PARTY_PATH}/downloaded_packages
 cp %{SOURCE7} %{THIRD_PARTY_PATH}/downloaded_packages
 cp %{SOURCE8} %{THIRD_PARTY_PATH}/downloaded_packages
 #cp %{SOURCE9} %{THIRD_PARTY_PATH}/downloaded_packages
