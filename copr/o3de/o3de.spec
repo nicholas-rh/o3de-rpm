@@ -66,6 +66,7 @@ Source38:      %{BUNDLED_PACKAGE_URL}/vulkan-validationlayers-1.2.198-rev1-linux
 Source39:      %{BUNDLED_PACKAGE_URL}/xxhash-0.7.4-rev1-multiplatform.tar.xz
 Source40:      %{BUNDLED_PACKAGE_URL}/zlib-1.2.11-rev5-linux.tar.xz
 Source41:      %{BUNDLED_PACKAGE_URL}/zstd-1.35-multiplatform.tar.xz
+Source42:      %{BUNDLED_PACKAGE_URL}/OpenSSL-1.1.1t-rev1-linux.tar.xz
 
 # Use custom dxc 
 Patch0: BuiltInPackages_linux.patch
@@ -89,6 +90,8 @@ Patch8: BuiltInPackages.patch
 Patch9: LYPython.patch
 # Remove PyYaml
 Patch10: requirements.patch
+# Use bundled openssl
+Patch11: OpenSSL_linux.patch
 
 BuildRequires:	aws-sdk-cpp
 BuildRequires:	aws-sdk-cpp-devel
@@ -188,6 +191,7 @@ Open 3D Engine (O3DE) is an Apache 2.0-licensed multi-platform 3D engine that en
 %patch 8
 %patch 9
 %patch 10
+%patch 11
 
 mkdir -p %{THIRD_PARTY_PATH}/downloaded_packages
 
@@ -232,6 +236,7 @@ cp %{SOURCE38} %{THIRD_PARTY_PATH}/downloaded_packages
 cp %{SOURCE39} %{THIRD_PARTY_PATH}/downloaded_packages
 cp %{SOURCE40} %{THIRD_PARTY_PATH}/downloaded_packages
 cp %{SOURCE41} %{THIRD_PARTY_PATH}/downloaded_packages
+cp %{SOURCE42} %{THIRD_PARTY_PATH}/downloaded_packages
 
 %build
 %cmake	-G "Ninja Multi-Config" \
