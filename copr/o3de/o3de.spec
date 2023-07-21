@@ -89,8 +89,6 @@ Patch8: BuiltInPackages.patch
 Patch9: LYPython.patch
 # Remove PyYaml
 Patch10: requirements.patch
-Patch11: FindAWSNativeSDK.patch
-Patch12: FindAWSGameLiftServerSDK.patch
 
 BuildRequires:	aws-sdk-cpp
 BuildRequires:	aws-sdk-cpp-devel
