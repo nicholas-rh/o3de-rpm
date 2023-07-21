@@ -20,6 +20,11 @@ Screenshots
     Multiplayer game
 </p>
 
+<p align="center">
+    <image src=https://github.com/nicholas-rh/o3de-rpm/assets/133678776/c2c2435b-52fe-4b59-a020-cce80de7b17a>
+    Game jam project by Loherangrin https://github.com/loherangrin/games.o3de.o3de-jam-2305
+</p>
+
 Build Instructions (Local)
 -
 1. Install the required build dependencies and build scripts/tools:
