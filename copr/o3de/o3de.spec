@@ -15,7 +15,7 @@
 
 Name:		o3de
 Version:	2305.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Open 3D Engine
 License:	ASL 2.0 or MIT
 URL:		https://o3de.org
@@ -300,4 +300,5 @@ popd
 rm -rf %{INSTALL_PATH}
 
 %changelog
-%autochangelog
+* Mon Jul 24 2023 Nicholas Frizzell <nfrizzel@redhat.com> 2305.0-4
+- Add manual changelog to remove git commit noise and specify release versions properly
