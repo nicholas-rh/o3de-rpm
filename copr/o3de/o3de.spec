@@ -93,16 +93,12 @@ Patch10: requirements.patch
 # Use bundled openssl
 Patch11: OpenSSL_linux.patch
 
-BuildRequires:	aws-sdk-cpp
-BuildRequires:	aws-sdk-cpp-devel
 BuildRequires:	clang
 BuildRequires:	cmake
 BuildRequires:	directx-shader-compiler
 BuildRequires:	fontconfig-devel
 BuildRequires:	git
 BuildRequires:	ninja-build
-BuildRequires:	openssl
-BuildRequires:	openssl-devel
 BuildRequires:	libatomic
 BuildRequires:	libcurl-devel
 BuildRequires:	libunwind-devel
@@ -114,11 +110,8 @@ BuildRequires:	python3
 BuildRequires:	python3-devel
 BuildRequires:	patchelf
 BuildRequires:	qt5-qtbase-devel
-BuildRequires:	zlib
 BuildRequires:	zlib-devel
 
-Requires:	aws-sdk-cpp%{?_isa}
-Requires:	aws-sdk-cpp-devel%{?_isa}
 Requires:	cmake%{?_isa}
 Requires:	clang%{?_isa}
 Requires:	directx-shader-compiler%{?_isa}
@@ -130,8 +123,6 @@ Requires:	libxcb-devel%{?_isa}
 Requires:	libzstd-devel%{?_isa}
 Requires:	mesa-libGLU-devel%{?_isa}
 Requires:	ninja-build%{?_isa}
-Requires:	openssl%{?_isa}
-Requires:	openssl-devel%{?_isa}
 Requires:	qt5-qtbase-devel%{?_isa}
 Requires:	zlib-devel%{?_isa}
 
@@ -156,6 +147,7 @@ Provides:	bundled(OpenEXR) = 3.1.3
 Provides:	bundled(openimageio) = 2.3.17
 Provides:	bundled(opencolorio) = 2.3.17
 Provides:	bundled(OpenMesg) = 8.1
+Provides:	bundled(openssl) = 1.1.1
 Provides:	bundled(PhysX) = 4.1.2
 Provides:	bundled(libpng) = 1.6.37
 Provides:	bundled(poly2tri) = 7f0487a
