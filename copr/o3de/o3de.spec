@@ -273,9 +273,9 @@ popd
 
 # Add o3de launcher to the PATH
 pushd %{buildroot}%{_bindir}
-echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/o3de; popd' > o3de
-echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/AssetProcessor; popd' > o3de.assetprocessor
-echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/Editor; popd' > o3de.editor
+echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/o3de $@; popd' > o3de
+echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/AssetProcessor $@; popd' > o3de.assetprocessor
+echo 'pushd %{INSTALL_PATH};O3DE_ROOT_INSTALL=TRUE bin/Linux/profile/Default/Editor $@; popd' > o3de.editor
 popd
 
 %files
