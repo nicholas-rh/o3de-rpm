@@ -106,6 +106,7 @@ BuildRequires:	libxcb-devel
 BuildRequires:	libxkbcommon-x11-devel
 BuildRequires:	libzstd-devel
 BuildRequires:	mesa-libGLU-devel
+BuildRequires:	openssl-devel
 BuildRequires:	python3
 BuildRequires:	python3-devel
 BuildRequires:	patchelf
@@ -123,6 +124,7 @@ Requires:	libxcb-devel%{?_isa}
 Requires:	libzstd-devel%{?_isa}
 Requires:	mesa-libGLU-devel%{?_isa}
 Requires:	ninja-build%{?_isa}
+Requires:	openssl-devel%{?_isa}
 Requires:	qt5-qtbase-devel%{?_isa}
 Requires:	zlib-devel%{?_isa}
 
