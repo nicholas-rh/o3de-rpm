@@ -1,6 +1,6 @@
 O3DE RPM
 -
-This is a (work-in-progress) project with the aim of working towards an O3DE RPM package which is able to be included in the official Fedora/RHEL/etc. repositories. It targets the O3DE 23.05 release.
+This is a (work-in-progress) project developed as part of my internship with the aim of working towards an O3DE RPM package which is able to be included in the official Fedora/RHEL/etc. repositories. It targets the O3DE 23.05 release.
 
 Builds are currently hosted at https://copr.fedorainfracloud.org/coprs/nfrizzel/o3de/
 
@@ -25,7 +25,11 @@ Screenshots
     Game jam project by Loherangrin https://github.com/loherangrin/games.o3de.o3de-jam-2305
 </p>
 
-Build Instructions (Local)
+Build from Source
+-
+There are a number of O3DE tasks which require a source engine build as opposed to the engine SDK/installer build that this package provides. The forked source tree with distro-specific patches preapplied can be found at https://github.com/nicholas-rh/o3de/tree/rpm
+
+RPM Build Instructions (Local)
 -
 1. Install the required build dependencies and build scripts/tools:
 ```
@@ -55,21 +59,31 @@ Commentary
 -
 **Q.) What is the status of this project?**
 
-A.) An RPM package can be generated either locally using rpmbuild, mock, etc. or through a build using the copr build system infrastructure. This package can be installed and run normally on a Fedora 38 installation.
+A.) An RPM package can be generated either locally using rpmbuild, mock, etc. or through a build using the copr build system infrastructure. This package can be installed and run normally on a Fedora 37, 38, or Rawhide installation (as of the date of writing).
 
 **Q.) What remaining obstacles are there to producing a Fedora-worthy package?**
 
-A.) Most of the remaining issues with regards to submitting the package for review are related to the various dependencies O3DE pulls in. There are a large number of bundled dependencies that O3DE manages through its own package management system separate from that of the OS or other traditional package management tools (see details on the O3DE packaging system below). 
+A.) Most of the remaining issues with regards to submitting the package for review are related to the various dependencies O3DE pulls in. There are a large number of bundled dependencies that O3DE manages through its own package management system separate from that of the OS or other traditional package management tools (see details on the O3DE packaging system below). Applications with bundled dependencies are tricky to handle using traditional packaging managers, and usually require manual patching of build scripts.
 
-Many of these dependencies are O3DE-specific forks of their upstream software, do not match the major number version present in the Fedora official repos (and so probably have ABI-breaking changes), or are otherwise unpackaged for Fedora. To further complicate things, the third-party dependencies which include binaries are built on Ubuntu, and are licensed under different licenses than that of the main O3DE repository. 
+Many of these dependencies are O3DE-specific forks of their upstream software, do not match the major number version present in the Fedora official repos (and so probably have ABI-breaking changes), or are otherwise unpackaged for Fedora.
 
-At least one of these licenses is not approved for Fedora (NvCloth with the Nvidia 1-Way Commercial License, which is not in the license approved/rejected list but seems similar to the Amazon Source License, which is not allowed). Then, each third-party dependency also may include it's own bundled dependencies, which need to be handled as well.
+The biggest obstacle is that the prebuilt dependencies which are provided through the custom O3DE package manager are built in an Ubuntu environment. Anyone familiar with application development on Linux will recognize the various pitfalls associated with attempting to port binaries between different distros, such as missing shared libraries, ABI incompatability, etc. These problems seem to be partially mitigated by the fact that O3DE largely provides a ground-up set of bundled dependencies in binary form. This means that many of the dependencies are "self-contained", even including the usual core system libraries such as openssl, zlib, etc.
 
-**Q.) With these dependency problems, why a traditional package rather than a Flatpak/Snap/etc.?**
+At least one of these licenses is not approved for Fedora and by extension Copr (NvCloth with the Nvidia 1-Way Commercial License, which is not in the license approved/rejected list but seems similar to the Amazon Source License, which is not allowed). Then, each third-party dependency also may include it's own bundled dependencies, which need to be handled as well.
+
+**Q.) What strategy would you recommend for handling these dependency problems?**
+
+A.) Unfortunately there is no one "silver bullet" solution to this. If the goal is to maintain the software as part of Fedora, then every dependency needs to be built from source, and bundled binaries are very much a no-go. Where possible, these dependencies would ideally be replaced by the Fedora system packages. The O3DE build scripts need to be modified to support this, however. I've done this for a number of packages where possible, and am working on merging these changes into the upstream repo.
+
+Packages which are forks, old versions, or otherwise not present in the official Fedora repos will need to be packaged manually. There are two approaches to this I see. The first which should be preferred is to package the dependencies in the traditional use-case agnostic way, so that the wider Fedora community can use them for unrelated software. Tom Callaway did a great job working on this here https://github.com/spotrh/o3de-fedora and I highly recommend using his work as a reference.
+
+For dependencies which have O3DE-specific patches, or for which it is otherwise not practical to do the above, I recommend making use of the O3DE build scripts https://github.com/o3de/3p-package-source and https://github.com/o3de/3p-package-scripts. These scripts are written with the assumption that they will be ran on Ubuntu, so modifications will need to be made to several in order to use them for building on Fedora. Several also use Ubuntu docker build images, which would need to be changed to the Fedora equivalent.
+
+**Q.) With these dependency problems, why a traditional package rather than a Flatpak/Snap/AppImage/etc.?**
 
 A.) Snap and Flatpak are good candidates for formats to distribute O3DE builds, and this is an opinion shared by the upstream developers. 
 
-There is a snap package produced by the upstream O3DE build system using CPack, which is a tool that generates installation packages from CMake files: https://docs.o3de.org/docs/welcome-guide/setup/installing-linux/. Currently this is considered "experimental". There is no equivalent support for Flatpak using CPack. I've considered manually putting together one as a test, but haven't yet due to time constraints.
+There is a snap package produced by the upstream O3DE build system using CPack, which is a tool that generates installation packages from CMake files: https://docs.o3de.org/docs/welcome-guide/setup/installing-linux/ There is no equivalent support for Flatpak using CPack.
 
 **Q.) How does the O3DE build system function?**
 
@@ -83,9 +97,12 @@ CMake targets are speified which correspond to each third-party dependency. Thes
 
 A.) Packages are built separately, typically on a build server, and then uploaded to the hardcoded package distribution server. The O3DE package generation scripts are located at https://github.com/o3de/3p-package-source and https://github.com/o3de/3p-package-scripts. The documentation for these tools is fairly good, but as a quick summary each package has its own custom build script that is run which generates a distributable package in the format O3DE expects. These scripts are different for each platform, and some are more complex than others, for example some require a Docker image to be built while others are simple shell scripts.
 
-**Q.) Why can't we just rebuild the O3DE dependencies using their tooling for Fedora?**
+Resources
+-
+https://docs.o3de.org/docs/welcome-guide/setup/setup-from-github/
 
-A.) I investigated doing this but I don't think it is the right way forward unless the upstream developers are also interested in getting involved. The reason why is because certain packages which use Docker build setups use an Ubuntu-based Docker image which doesn't get us anywhere, and those that don't still use Ubuntu tools like the apt package manager. It would probably be more effort to rewrite these than to just properly package the dependencies, and when packaging them properly others can make use of them for non-O3DE software as well.
+https://rpm.org/documentation.html
 
-**Q.) What strategy was used for packaging dependencies?**
-Tom Callaway did a lot of great work on providing a base of work to go off of for packaging the O3DE dependencies. I decided that it would be more useful to take his work and see what could be done to get it reviewed for inclusion into Fedora where it can be maintained rather than attempt to update and move each dependency into copr. My rationale for this is that it would be better to focus on a few packages and submit them for Fedora where others can benefit from and help to maintain them instead of making superficial changes to his work that will quickly become outdated, since both O3DE and Fedora are fast-moving projects. So, there are still a number of dependencies which use the upstream-built packages rather than distro packages.
+https://docs.fedoraproject.org/en-US/packaging-guidelines/
+
+https://docs.fedoraproject.org/en-US/legal/allowed-licenses/
