@@ -89,6 +89,10 @@ A.) Snap and Flatpak are good candidates for formats to distribute O3DE builds, 
 
 There is a snap package produced by the upstream O3DE build system using CPack, which is a tool that generates installation packages from CMake files: https://docs.o3de.org/docs/welcome-guide/setup/installing-linux/ There is no equivalent support for Flatpak using CPack.
 
+**Q.) Why not try to target a stripped-down version of O3DE?**
+
+A.) O3DE is fairly modular, but even when building a minimal version of the engine there is still a fairly significant number of dependencies which need to be included. The smallest useful target which can be distributed is the Editor, which requires all of the core engine components as well as a few extra gems. Targeting the SDK engine/install target for packaging means users don't have to do any building of core components and gems, which is a better user experience.
+
 **Q.) How does the O3DE build system function?**
 
 A.) O3DE is a primarily-C++ project with build scripts written in CMake. It is composed of "Gems" which are modules that include code, assets, etc. There are a number of core gems (required for the engine to function) as well as many optional gems. Users can also specify their own gems, and there are a set of official, extra gems in the o3de-extra repository which can be included https://github.com/o3de/o3de-extras/tree/development
