@@ -1,5 +1,8 @@
+%global commit 72a2ec4c1b56ce233e0da97a36f87af98927256c
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 Name:		spirv-cross
-Version:	1.1.5
+Version:	20210429
 Release:	%{autorelease}
 URL:		https://github.com/KhronosGroup/SPIRV-Cross/
 License:	ASL 2.0
@@ -8,20 +11,20 @@ Summary:	Library and tool for working with SPIR-V
 BuildRequires:	cmake
 BuildRequires:	gcc-c++
 
-Source0:	https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/MoltenVK-%{version}.tar.gz
+Source0:	https://github.com/KhronosGroup/SPIRV-Cross/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
 
 %description
 SPIRV-Cross is a practical tool and library for performing reflection on SPIR-V and disassembling SPIR-V back to high level languages. 
 
 %package devel
-Summary:	Development files for SPIRV-Cross
+Summary:	Development files for spirv-cross
 Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description devel
-Development files for SPIRV-Cross.
+Development files for spirv-cross.
 
 %prep
-%autosetup -n SPIRV-Cross-MoltenVK-%{version}
+%autosetup -n SPIRV-Cross-%{commit}
 
 %build
 # The CLI requires the static libs be built
@@ -32,7 +35,7 @@ Development files for SPIRV-Cross.
 %cmake_install
 
 %files
-%license LICENSE LICENSES/*
+%license LICENSE
 %doc README.md
 %{_bindir}/spirv-cross
 %{_libdir}/libspirv-cross-c-shared.so.*
