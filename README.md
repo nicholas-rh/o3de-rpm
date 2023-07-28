@@ -29,6 +29,10 @@ Build from Source
 -
 There are a number of O3DE tasks which require a source engine build as opposed to the engine SDK/installer build that this package provides. The forked source tree with distro-specific patches preapplied can be found at https://github.com/nicholas-rh/o3de/tree/rpm
 
+Third-Party Dependency Tracker
+-
+[A spreadsheet with a list of each O3DE third-party package dependency and information about it that is relevant for packagers can be found here](https://docs.google.com/spreadsheets/d/12raQfOtQBYHzXoYKdYUy6ZCOCCsmuhHCbc-730HVKJ8/edit?usp=sharing)
+
 RPM Build Instructions (Local)
 -
 1. Install the required build dependencies and build scripts/tools:
