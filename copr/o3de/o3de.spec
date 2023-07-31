@@ -14,6 +14,8 @@
 
 # Longer compilation times but smaller storage footprint
 %global		SAVE_DISK_SPACE		0
+# Use certain Fedora system packages instead of O3DE packages
+%global		USE_SYSTEM_PACKAGES	ON
 
 Name:		o3de
 Version:	2305.0
@@ -244,6 +246,11 @@ cp %{SOURCE42} %{THIRD_PARTY_PATH}/downloaded_packages
 	-DCMAKE_INSTALL_PREFIX=%{INSTALL_PATH} \
 	-DLY_SYSTEM_PACKAGE_AWSNativeSDK=ON \
 	-DLY_SYSTEM_PACKAGE_AWSGameLiftServerSDK=ON \
+	-DLY_SYSTEM_PACKAGE_zstd=%{USE_SYSTEM_PACKAGES} \
+	-DLY_SYSTEM_PACKAGE_zlib=%{USE_SYSTEM_PACKAGES} \
+	-DLY_SYSTEM_PACKAGE_expat=%{USE_SYSTEM_PACKAGES} \
+	-DLY_SYSTEM_PACKAGE_freetype=%{USE_SYSTEM_PACKAGES} \
+	-DLY_SYSTEM_PACKAGE_libsamplerate=%{USE_SYSTEM_PACKAGES} \
 %if %{SAVE_DISK_SPACE}
 	-DLY_DISABLE_TEST_MODULES=ON \
 	-DLY_STRIP_DEBUG_SYMBOLS=ON \
@@ -306,5 +313,8 @@ popd
 rm -rf %{INSTALL_PATH}
 
 %changelog
+* Mon Jul 31 2023 Nicholas Frizzell <nfrizzel@redhat.com> 2305.0-5
+- Add option to specify use of certain system packages
+
 * Mon Jul 24 2023 Nicholas Frizzell <nfrizzel@redhat.com> 2305.0-4
 - Add manual changelog to remove git commit noise and specify release versions properly
