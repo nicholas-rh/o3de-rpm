@@ -21,6 +21,11 @@ Screenshots
 </p>
 
 <p align="center">
+    <image src=https://github.com/nicholas-rh/o3de-rpm/assets/133678776/e41a5e8b-64d4-4806-8a50-de0873ae0c2d>
+    ArchVis Loft sample https://github.com/o3de/loft-arch-vis-sample
+</p>
+
+<p align="center">
     <image src=https://github.com/nicholas-rh/o3de-rpm/assets/133678776/c2c2435b-52fe-4b59-a020-cce80de7b17a>
     Game jam project by Loherangrin https://github.com/loherangrin/games.o3de.o3de-jam-2305
 </p>
