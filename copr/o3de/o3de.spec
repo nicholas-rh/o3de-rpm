@@ -13,9 +13,9 @@
 %global		INSTALL_PATH		%{_libdir}/o3de
 
 # Longer compilation times but smaller storage footprint
-%global		SAVE_DISK_SPACE		0
+%global		SAVE_DISK_SPACE		1
 # Use certain Fedora system packages instead of O3DE packages
-%global		USE_SYSTEM_PACKAGES	ON
+%global		USE_SYSTEM_PACKAGES	OFF
 
 Name:		o3de
 Version:	2305.0
