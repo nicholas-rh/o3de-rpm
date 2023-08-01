@@ -1,0 +1,20 @@
+--- Makefile.linux	2023-08-01 17:15:10.732663261 -0400
++++ Makefile.linux	2023-08-01 17:14:04.029035170 -0400
+@@ -1,7 +1,6 @@
+-uname_P := $(shell sh -c 'uname -p 2>/dev/null || echo not')
++uname_P := $(shell sh -c 'uname -m 2>/dev/null || echo not')
+ 
+ CXX ?= g++
+-ISPC ?= ISPC/linux/ispc
+ CXXFLAGS ?= -O2 $(ARCH_CXXFLAGS) -fPIC -I.
+ ISPC_FLAGS ?= -O2 --arch=$(ISPC_ARCH) --target=$(ISPC_TARGETS) --opt=fast-math --pic
+ LDFLAGS ?= -shared -rdynamic
+@@ -50,7 +49,7 @@
+ 
+ # Generate .o and .h +variants using ispc
+ %_ispc.o %_ispc_sse2.o %_ispc_avx.o %_ispc_neon.o %_ispc.h %_ispc_sse2.h %_ispc_avx.h %_ispc_neon.h : %.ispc
+-	$(ISPC) $(ISPC_FLAGS) -o $@ -h $(patsubst %.o,%.h,$@) $<
++	ispc $(ISPC_FLAGS) -o $@ -h $(patsubst %.o,%.h,$@) $<
+ 
+ # Link
+ $(DYNAMIC_LIBRARY) : $(OBJS)
