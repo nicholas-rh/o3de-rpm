@@ -104,7 +104,7 @@ A.) O3DE is a primarily-C++ project with build scripts written in CMake. It is c
 
 The core engine code as well as each gem has certain dependencies which are satisfied either by bundling & building the source code into the engine/gem itself (e.g. ImGui), pulling the source code using CMake plumbing (RecastNavigation), using system libraries (libunwind, openssl, etc.) or finally by using the O3DE-specific package manager, which pulls prebuilt binaries or other dependencies from an O3DE-hosted server.
 
-CMake targets are speified which correspond to each third-party dependency. These dependencies are resolved differently depending on the type. The first three categories of dependencies mentioned are included through the usual CMake means. O3DE package manager packages, however, are associated with a certain package name and version which the O3DE build system will use to download them at build time as needed (they are cached afterwards).
+CMake targets are speified which correspond to each third-party dependency. These dependencies are resolved differently depending on the type. The first three categories of dependencies mentioned are included through the usual CMake means. O3DE package manager packages, however, are associated with a certain package name and version which the O3DE build system will use to download them at build time as needed (they are cached afterwards). Each package has its own cmake find module used to locate it and CMAKE_MODULE_PATH is modified to allow this. Sometimes this can cause name collisions when attempting to use the Kitware-provided CMake find modules for certain libraries.
 
 **Q.) How does the O3DE package manager function?**
 
