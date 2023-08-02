@@ -1,6 +1,6 @@
 O3DE RPM
 -
-This is a (work-in-progress) project developed as part of my internship with the aim of working towards an O3DE RPM package which is able to be included in the official Fedora/RHEL/etc. repositories. It targets the O3DE 23.05 release.
+This is a (work-in-progress) project developed as part of my internship with the aim of working towards an O3DE RPM package which is able to be included in the official Fedora/RHEL/etc. repositories. It targets the O3DE 23.05 release for x86-64 systems. The ARM build is not currently supported.
 
 Builds are currently hosted at https://copr.fedorainfracloud.org/coprs/nfrizzel/o3de/
 
@@ -128,6 +128,8 @@ A.) This is useful for example when you want to modify the CMake find module for
 
 Resources
 -
+https://github.com/nicholas-rh/o3de-fedora
+
 https://docs.o3de.org/docs/welcome-guide/setup/setup-from-github/
 
 https://rpm.org/documentation.html
@@ -135,3 +137,5 @@ https://rpm.org/documentation.html
 https://docs.fedoraproject.org/en-US/packaging-guidelines/
 
 https://docs.fedoraproject.org/en-US/legal/allowed-licenses/
+
+https://github.com/nicholas-rh/o3de-fedora-container
