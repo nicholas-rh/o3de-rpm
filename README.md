@@ -6,6 +6,8 @@ Builds are currently hosted at https://copr.fedorainfracloud.org/coprs/nfrizzel/
 
 Based off of the work of https://github.com/spotrh/o3de-fedora
 
+Dependency specific commentary and progress can be found under the issues tab.
+
 Spec files, patches, and other packaging related files are licensed under the MIT license, tarballs are licensed under their respective project license(s).
 
 Screenshots
