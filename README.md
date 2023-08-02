@@ -110,6 +110,22 @@ CMake targets are speified which correspond to each third-party dependency. Thes
 
 A.) Packages are built separately, typically on a build server, and then uploaded to the hardcoded package distribution server. The O3DE package generation scripts are located at https://github.com/o3de/3p-package-source and https://github.com/o3de/3p-package-scripts. The documentation for these tools is fairly good, but as a quick summary each package has its own custom build script that is run which generates a distributable package in the format O3DE expects. These scripts are different for each platform, and some are more complex than others, for example some require a Docker image to be built while others are simple shell scripts.
 
+**Q.) How do you create and use a package using the O3DE package manager infrastructure?**
+
+A.) This is useful for example when you want to modify the CMake find module for a O3DE package. There may be some differences between each package, but generally the steps to follow are:
+
+1.) Clone both https://github.com/o3de/3p-package-source and https://github.com/o3de/3p-package-scripts
+
+2.) `cd` to your 3p-package-scripts directory
+
+3.) Run `python3 ./o3de_package_scripts/build_package.py --search_path $3P_PACKAGE_SOURCE_PATH $PACKAGE_NAME` Note that on Fedora, you can expect most of the build scripts to fail due to the build scripts being written to target Ubuntu. In addition, many of the build scripts use Ubuntu docker images, which is another big obstacle if you want to adapt the build scripts for use on Fedora.
+
+4.) Copy the built tarball to your $LY_3RDPARTY_PATH/downloaded_packages folder, where the package manager will find it. Delete any extracted contents of the same package under $LY_3RDPARTY_PATH/packages if they exist.
+
+5.) Compute the hash of the tarball (not extracted) file using `sha256sum`, and update the PACKAGE_HASH under `cmake/3rdParty/Platform/Linux/BuiltInPackages_linux_x86_64.cmake` as appropriate
+
+6.) Make sure to reconfigure your project using CMake. The updated package should now be linked to.
+
 Resources
 -
 https://docs.o3de.org/docs/welcome-guide/setup/setup-from-github/
