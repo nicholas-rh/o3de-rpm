@@ -7,19 +7,20 @@
 
 %global		toolchain clang
 
-# The server URL where O3DE packages are hosted
+# The server URL where O3DE packages are hosted, managed by foundation
 %global		BUNDLED_PACKAGE_URL	https://d3t6xeg4fgfoum.cloudfront.net
+
 %global		THIRD_PARTY_PATH	%{_builddir}/3rdParty
 %global		INSTALL_PATH		%{_libdir}/o3de
 
-# Longer compilation times but smaller storage footprint
+# Longer compilation times but smaller storage footprint, leave this enabled for copr builds
 %global		SAVE_DISK_SPACE		1
 # Use certain Fedora system packages instead of O3DE packages
 %global		USE_SYSTEM_PACKAGES	OFF
 
 Name:		o3de
 Version:	2305.0
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	Open 3D Engine
 # Note bundled dependencies are licensed under a number of other different licenses
 License:	ASL 2.0 or MIT
@@ -83,28 +84,33 @@ Patch1: Configurations_clang.patch
 # https://github.com/o3de/o3de/issues/16375
 Patch2: SystemPackages_linux.patch
 # Disable non-free gems/modules
+# https://github.com/nicholas-rh/o3de-rpm/issues/23
 Patch3: enginejson.patch
 # CMake script modifications to allow for use of system packages
 # https://github.com/o3de/o3de/issues/16375
 Patch4: PAL_linux.patch
 # This gem gives a compile error, need to fix eventually but disabling for now
-# 
+# https://github.com/nicholas-rh/o3de-rpm/issues/38
 Patch5: RecastNavigationCMakeLists.patch
 # Fix clang-specific compile error
+# https://github.com/o3de/o3de/pull/15772
 Patch6: RenderPass.patch
 # Add bundled licenses
 Patch7: NOTICES.patch
 # Move zlib fix
 Patch8: BuiltInPackages.patch
 # Add envvar to allow for running as root user without issue
+# https://github.com/o3de/o3de/issues/16367
 Patch9: LYPython.patch
-# Use bundled openssl
+# Move openssl fix
 Patch10: OpenSSL_linux.patch
 # Remove PyYaml
+# https://github.com/o3de/o3de/issues/16392
 Patch11: requirements.patch
 
 BuildRequires:	clang
 BuildRequires:	cmake
+# This is a copr package https://copr.fedorainfracloud.org/coprs/nfrizzel/directx-shader-compiler/
 BuildRequires:	directx-shader-compiler
 BuildRequires:	fontconfig-devel
 BuildRequires:	git
@@ -138,6 +144,7 @@ Requires:	openssl-devel%{?_isa}
 Requires:	qt5-qtbase-devel%{?_isa}
 Requires:	zlib-devel%{?_isa}
 
+# Some of these can be optionally swapped out for the system package instead
 Provides:	bundled(assimp) = 5.2.5
 Provides:	bundled(astc-encoder) = 3.2
 Provides:	bundled(AWSGameLiftServer) = 3.4.2
@@ -319,6 +326,9 @@ popd
 rm -rf %{INSTALL_PATH}
 
 %changelog
+* Fri Aug 4 2023 Nicholas Frizzell <nfrizzel@redhat.com> 2305.0-6
+- Misc. cleanup and documentation
+
 * Mon Jul 31 2023 Nicholas Frizzell <nfrizzel@redhat.com> 2305.0-5
 - Add option to specify use of certain system packages
 
