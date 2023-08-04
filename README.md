@@ -63,7 +63,7 @@ $ rpmdev-setuptree
 ```
 5. Acquire the source files using spectool, copy patches into the build tree
 ```
-$ spectool -g o3de.spec --directory ~/rpmbuild/SOURCE; cp *.patch ~/rpmbuild/SOURCE
+$ spectool -g o3de.spec --directory ~/rpmbuild/SOURCES; cp *.patch ~/rpmbuild/SOURCES
 ```
 6. Run the build. If successful, the binary RPM will be located in ~/rpmbuild/RPMS. Expect the build to take a while, especially on less-powerful hardware, including the post-build stages such as checking for unpackaged files.
 ```
