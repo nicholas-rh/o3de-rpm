@@ -71,6 +71,13 @@ $ rpmbuild -bb o3de.spec
 ```
 If you run into any problems during a build following these instructions, please file an issue and I'll look to address it.
 
+Debugging Strategy/Suggestions
+-
+- If you have an NVidia GPU and are struggling to open the editor, make sure to install the RPMFusion drivers https://rpmfusion.org/Howto/NVIDIA
+- It seems that Intel integrated graphics are not supported as of writing: https://github.com/o3de/o3de/issues/15999
+- If you are using Fedora Workstation/GNOME and getting the "not responding" popup upon starting O3DE, this is normal, give some time for the asset processor to run
+- You can manually run the asset processor by running "o3de.assetprocessor --project-path $PROJECT_PATH" from the shell
+
 Commentary
 -
 **Q.) What is the status of this project?**
