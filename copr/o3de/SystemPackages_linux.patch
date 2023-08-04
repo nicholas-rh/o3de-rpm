@@ -1,3 +1,6 @@
+diff --git a/cmake/Platform/Linux/SystemPackages_linux.cmake b/cmake/Platform/Linux/SystemPackages_linux.cmake
+new file mode 100644
+index 0000000000..de76889956
 --- /dev/null
 +++ cmake/Platform/Linux/SystemPackages_linux.cmake
 @@ -0,0 +1,127 @@
@@ -78,7 +81,7 @@
 +system_package_find_package(PNG PNG::PNG PNG)
 +endif()
 +
-+if (LY_SYSTEM_PACKAGE_DirectXShaderCompilerDxc)
++if (LY_SYSTEM_PACKAGE_OpenEXR)
 +system_package_pkg_config(OpenEXR OpenEXR OpenEXR)
 +endif()
 +

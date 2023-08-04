@@ -74,17 +74,21 @@ Source40:	%{BUNDLED_PACKAGE_URL}/zlib-1.2.11-rev5-linux.tar.xz
 Source41:	%{BUNDLED_PACKAGE_URL}/zstd-1.35-multiplatform.tar.xz
 Source42:	%{BUNDLED_PACKAGE_URL}/OpenSSL-1.1.1t-rev1-linux.tar.xz
 
-# Use custom dxc 
+# CMake script modifications to allow for use of system packages
+# https://github.com/o3de/o3de/issues/16375
 Patch0: BuiltInPackages_linux.patch
 # Remove -Werror to prevent extraneous compile errors
 Patch1: Configurations_clang.patch
-# Use custom dxc 
+# CMake script modifications to allow for use of system packages
+# https://github.com/o3de/o3de/issues/16375
 Patch2: SystemPackages_linux.patch
 # Disable non-free gems/modules
 Patch3: enginejson.patch
-# Use custom dxc
+# CMake script modifications to allow for use of system packages
+# https://github.com/o3de/o3de/issues/16375
 Patch4: PAL_linux.patch
 # This gem gives a compile error, need to fix eventually but disabling for now
+# 
 Patch5: RecastNavigationCMakeLists.patch
 # Fix clang-specific compile error
 Patch6: RenderPass.patch
@@ -244,9 +248,11 @@ cp %{SOURCE42} %{THIRD_PARTY_PATH}/downloaded_packages
 	-DO3DE_INSTALL_ENGINE_NAME=o3de-sdk \
 	-DLY_3RDPARTY_PATH=%{THIRD_PARTY_PATH} \
 	-DCMAKE_INSTALL_PREFIX=%{INSTALL_PATH} \
-	-DLY_SYSTEM_PACKAGE_AWSNativeSDK=ON \
-	-DLY_SYSTEM_PACKAGE_AWSGameLiftServerSDK=ON \
+	-DLY_SYSTEM_PACKAGE_DirectXShaderCompilerDxc=ON \
+	-DLY_SYSTEM_PACKAGE_OpenEXR=%{USE_SYSTEM_PACKAGES} \
+	-DLY_SYSTEM_PACKAGE_SQLite=%{USE_SYSTEM_PACKAGES} \
 	-DLY_SYSTEM_PACKAGE_zstd=%{USE_SYSTEM_PACKAGES} \
+	-DLY_SYSTEM_PACKAGE_libpng=%{USE_SYSTEM_PACKAGES} \
 	-DLY_SYSTEM_PACKAGE_zlib=%{USE_SYSTEM_PACKAGES} \
 	-DLY_SYSTEM_PACKAGE_expat=%{USE_SYSTEM_PACKAGES} \
 	-DLY_SYSTEM_PACKAGE_freetype=%{USE_SYSTEM_PACKAGES} \
