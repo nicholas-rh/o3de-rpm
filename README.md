@@ -42,25 +42,30 @@ Third-Party Dependency Tracker
 
 RPM Build Instructions (Local)
 -
-1. Install the required build dependencies and build scripts/tools:
+
+1. Enable the copr repository for the necessary package dependencies
+```
+$ dnf copr enable nfrizzel/directx-shader-compiler
+```
+2. Install the required build dependencies and build scripts/tools:
 ```
 $ dnf install openssl cmake clang ninja-build git git-lfs openssl-devel libunwind-devel \
   libzstd-devel zlib-devel libxkbcommon-x11-devel libcurl-devel fontconfig-devel libxcb-devel \
-  mesa-libGLU-devel qt5-qtbase-devel rpmdevtools rpmspectool rpmlint
+  mesa-libGLU-devel qt5-qtbase-devel rpmdevtools rpmspectool rpmlint directx-shader-compiler
 ```
-2. Clone the git repository
+3. Clone the git repository
 ```
 $ git clone https://github.com/nicholas-rh/o3de-rpm; cd o3de-rpm/copr/o3de
 ```
-3. Setup the build tree
+4. Setup the build tree
 ```
 $ rpmdev-setuptree
 ```
-4. Acquire the source files using spectool, copy patches into the build tree
+5. Acquire the source files using spectool, copy patches into the build tree
 ```
 $ spectool -g o3de.spec --directory ~/rpmbuild/SOURCE; cp *.patch ~/rpmbuild/SOURCE
 ```
-5. Run the build. If successful, the binary RPM will be located in ~/rpmbuild/RPMS. Expect the build to take a while, especially on less-powerful hardware, including the post-build stages such as checking for unpackaged files.
+6. Run the build. If successful, the binary RPM will be located in ~/rpmbuild/RPMS. Expect the build to take a while, especially on less-powerful hardware, including the post-build stages such as checking for unpackaged files.
 ```
 $ rpmbuild -bb o3de.spec
 ```
